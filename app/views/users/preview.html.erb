@@ -1,0 +1,5 @@
+<div class="col-md-12 resume-title">
+  <%=link_to "回履歷表修正", resume_path, :class=>"btn btn-default text-center"%>
+</div>
+
+<%= render :partial => "users/resume_page", :locals => { :user => @user }%>

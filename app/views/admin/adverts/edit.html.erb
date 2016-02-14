@@ -1,0 +1,15 @@
+<%= render :partial => "admin/companies/sidebar"%>
+<div class="col-md-10">
+  <div class=" right">
+    <%=link_to admin_adverts_path, :class=>"btn btn-default" do%>
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    <%end%>
+  </div>
+  <%=form_for @advert, :url => admin_advert_path(@advert) do |a|%>
+    <%=render :partial => "form", :locals => {:a =>a}%>
+  <%end%>
+</div>
+<br>
+<br>
+<br>
+<br>

@@ -1,0 +1,85 @@
+<% if @article.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+  <ul>
+  <% @article.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<%end%>
+<div class="col-md-12">
+  <div class="form-group">
+    <%= a.label :title, "標題title:"%>
+    <%= a.text_field :title, :class => "form-control", :required => true%>
+  </div>
+
+  <div class="form-group">
+  <%= a.label :article_category_id, "文章類別:"%>
+  <%= a.collection_select :article_category_id, ArticleCategory.all, :id, :name, {}, :class => "form-control"%>
+  </div>
+
+  <div class="form-group">
+  <%= a.label :article_tag_list, "文章tags"%>
+  <%= a.text_field :article_tag_list, :class => "form-control", :id=>"article_tag_list" %>
+  </div>
+
+  <div class="form-group">
+  <%= a.label :company_list, "相關公司"%>
+  <%= a.select :company_list, Company.all.map{|t| t.brand}, {}, :class => "form-control", :id=>"company_list", :multiple => "multiple" %>
+  </div>
+
+  <div class="form-group">
+    <%= a.label :status, "狀態status"%>
+    <%= a.select :status, article_status_options, {}, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= a.label :published_on, "刊登時間Published_on:"%>
+    <%= a.date_select :published_on, :class => "form-control", :required => true%>
+  </div>
+
+  <div class="form-group">
+    <%= a.label :description, "描述description:"%>
+    <%= a.text_area :description, :class => "form-control", :rows=>"6", :required => true%>
+  </div>
+
+  <!-- Banner -->
+  <div class="image">
+    <div class="field">
+        <%= a.label :banner, "banner 940x420" %><br>
+        <%= a.file_field :banner%>
+        <%= a.label :banner_alt, "banner_alt" %><br>
+        <%= a.text_field :banner_alt, :class=>"form-control"%>
+    </div>
+  </div>
+  <br>
+  <%if @article.banner.present?%>
+    <%=link_to image_tag(@article.banner.url(:thumb)),@article.banner.url, :target=>"_blank"%>
+    <%=@article.banner_alt%>
+  <%end%>
+
+
+
+  <div class="form-group">
+  <%= a.label :content, "文章內容"%>
+  <%= a.cktext_area :content, :id => 'sometext' , :rows=>"10" %>
+  </div>
+
+  <div class="form-group">
+  <%= a.submit "送出", :class => "btn btn-success"%>
+  </div>
+
+</div>
+
+<script>
+  $("#company_list").select2();
+
+  $("#article_tag_list").select2({
+    tags: <%=raw ArticleTag.all.map{|t| t.name}%>,
+    tokenSeparators: [',', ' ']
+  });
+</script>
+
+

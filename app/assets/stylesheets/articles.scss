@@ -1,0 +1,242 @@
+// Place all the styles related to the articles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.article-head-right{
+  background-color:#f8f8f8;
+  height:30px;
+  margin-bottom: 20px
+}
+
+.article-head-left{
+  background-color:#16a;
+  height:30px;
+  margin-bottom: 20px;
+  text-align:center;
+  p{
+    margin:0;
+    color:#fff;
+    line-height: 30px;
+  }
+}
+
+.article-banner{
+  padding:0;
+  height:135px;
+  overflow : hidden;
+  img{
+    width: 100%;
+    height: 100%;
+  }
+
+}
+
+.article-sidebar{
+  background-color:#337ab7;
+  height:30px;
+  text-align:center;
+ p{
+    margin:0;
+    color:#fff;
+    line-height: 30px;
+  }
+}
+
+.article-wrapper{
+  margin:20px 0;
+}
+
+.article-category{
+    color:#D0544E;
+    border-left:5px solid #D0544E;
+    padding:0 0 0 5px;
+    margin:0 0 2px 15px;
+    background-color:#f8f8f8;
+}
+
+.article-title{
+  font-size:16px;
+  font-weight:bold;
+  margin-bottom: 10px;
+  height:39px;
+  a{
+    text-decoration: none;
+    color:#000;
+  }
+
+  a:hover{
+    color:#D0544E;
+  }
+}
+
+.article-content{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+   margin-bottom: 5px;
+  p{
+    margin:0;
+  }
+}
+
+.article-show-content{
+  color: #444;
+  font-size: 16px;
+  p{
+    line-height:1.7em;
+  }
+}
+
+.article-new{
+  span{
+    color:#000;
+
+  }
+
+  margin-bottom:2px;
+}
+
+.article-show{
+
+  .col-md-12{
+    margin:0 0 15px 0;
+  }
+
+  img{
+    width: 100%;
+    height: 100%;
+  }
+  .margin-bottom-clear{
+  margin-bottom: 5px;
+  hr{
+    margin:10px 0;
+  }
+}
+  /*.article-show-catrgory{
+    color:#337ab7;
+    border-left:5px solid #337ab7;
+    padding:0 5px;
+    background-color:#f8f8f8;
+  }*/
+
+}
+
+.category-title{
+  margin-bottom: 5px;
+  font-size:12px;
+  height:50px;
+  color:#000;
+  line-height:22px;
+}
+
+.tag-title{
+  margin-bottom: 5px;
+  font-size:12px;
+  height:50px;
+  color:#000;
+}
+
+.tag-content{
+  margin-bottom: 5px;
+  color: #888;
+  font-size:12px;
+  height:50px;
+
+  a{
+    text-decoration: none;
+  }
+  a:hover{
+    span{
+      color: #16a;
+    }
+  }
+}
+
+.article-show-tag{
+  a{
+    text-decoration: none;
+  }
+  a:hover{
+    span{
+      color: #16a;
+    }
+  }
+}
+
+.article-show-top-right{
+  line-height:22px;
+
+
+  .glyphicon-heart{
+    padding: 0 12px;
+  }
+
+  .glyphicon-heart-empty{
+    padding: 0 12px;
+  }
+
+  .glyphicon-eye-open:before {
+    position: relative;
+    top: 3px;
+  }
+
+  .glyphicon-heart{
+    color:#D0104C;
+  }
+
+  .glyphicon-heart-empty{
+    color:#D0104C;
+  }
+
+  .fb-share-button{
+    position: relative;
+    top: 1px;
+  }
+
+}
+
+.author{
+  color:#D0544E;
+  font-size:15px;
+}
+
+.more-title{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.no-padding{
+  padding:0 2px;
+}
+
+.more-company{
+  padding-right: 0px;
+  .list-group-item{
+    border: 0px;
+  }
+
+  a{
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 979px) {
+
+.article-banner{
+  height:100%;
+}
+
+.article-category{
+    color:#D0544E;
+    border-left:5px solid #D0544E;
+    padding:0 0 0 5px;
+    margin:10px 0 5px 0;
+    background-color:#f8f8f8;
+}
+
+}
+

@@ -1,0 +1,52 @@
+<div class="row">
+  <%= render :partial => "admin/companies/sidebar"%>
+  <div class="col-sm-10">
+    <div class="col-md-5">
+      <div class="left">
+        <h1>求職者一覽 <%=@users.size%></h1>
+      </div>
+    </div>
+    <div class="col-md-7 padding_r">
+      <div class=" right">
+      </div>
+    </div>
+  <br>
+    <table class="table table-striped">
+      <tr>
+        <th>ID</th>
+        <th>投遞次數</th>
+        <th>姓名</th>
+        <th>E-mail</th>
+        <th>電話</th>
+        <th>性別</th>
+        <th><%=link_to admin_users_path(:order=>"birthday") do%>
+          年齡
+          <i class="glyphicon glyphicon-sort-by-order-alt"></i>
+          <%end%>
+        </th>
+        <th>地址</th>
+        <th  style="text-align:center">管理者編輯</th>
+      </tr>
+      <%@users.each do |u|%>
+        <tr>
+          <td><%=u.id%></td>
+          <td><%=u.job_applies.size%></td>
+          <td><%=u.name%></td>
+          <td><%=u.email%></td>
+          <td><%=u.phone%></td>
+          <td><%=u.sex%></td>
+          <td><%=u.birthday%></td>
+          <td><%=u.address%></td>
+          <td style="text-align:center">
+            <%=link_to admin_user_path(u), :class => "btn btn-default" do%>
+              <span class="glyphicon glyphicon-eye-open"></span>
+            <%end%>
+            <%=link_to edit_admin_user_path(u), :class => "btn btn-default" do%>
+              <span class="glyphicon glyphicon-edit"></span>
+            <%end%>
+          </td>
+        </tr>
+      <%end%>
+    </table>
+  </div>
+</div>

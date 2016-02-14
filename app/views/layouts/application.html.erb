@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="google-site-verification" content="sowWloLaH8OmQmZvOgQecI3zqPlgKr3BLTfZFn3GKZo" />
+  <title><%= display_page_title %></title>
+  <meta http-equiv="content-language" content="zh-tw">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="<%= display_page_desc %>">
+  <meta name="keywords" content="<%= display_page_keywords %>">
+  <meta name="author" content="Yourator">
+  <meta name="robots" content="all">
+  <meta name="copyright" content="Copyright 2015 Yourator. All Rights Reserved.">
+  <meta name="google-site-verification" content="YA7jjYFDvyMzA8F173Tr1PtmFCgGJsd56pzpXAyB88g" />
+  <%=favicon_link_tag "favicon.png", type: 'image/png'%>
+  <%=favicon_link_tag 'apple-touch-icon-120x120-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png'%>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= yield :head %>
+
+  <% if Rails.env.production? %>
+    <!-- Google Tag Manager -->
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-N2QJ8B"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N2QJ8B');</script>
+  <% end %>
+</head>
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.5&appId=1511524352496185";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="top <%=is_home?%>">
+  <div class="container">
+    <div class="col-sm-12 col-md-2 logo">
+      <h3><%=link_to image_tag(asset_path("logo.png"), :size=>"144x32"), root_path%></h3>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4 nav_left">
+
+      <%=link_to companies_path, :class=>( (current_page?(companies_path))? "link_active" : "link" ) do%>
+        <span class="fa fa-rocket"></span>
+        <span>公司</span>
+      <%end%>
+
+      <%=link_to jobs_path, :class=>( (current_page?(jobs_path))? "link_active" : "link")  do%>
+        <span class="glyphicon glyphicon-th-large"></span>
+        <span>職缺</span>
+      <%end%>
+
+      <%=link_to articles_path, :class=>( (current_page?(articles_path))? "link_active" : "link")  do%>
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span>專欄</span>
+      <%end%>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-5">
+      <%if current_user%>
+        <div class=" nav_right">
+          <%if current_user.admin?%>
+            <%= link_to admin_companies_path, :class=>( (current_page?(admin_companies_path))? "link_active" : "link"), :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"管理員" do%>
+              <span class="glyphicon glyphicon-apple"></span>
+            <%end%>
+          <%end%>
+
+
+          <%= link_to follows_path, :class=>( (current_page?(follows_path))? "link_active" : "link"), :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"收藏" do%>
+            <span class="glyphicon glyphicon-inbox"></span>
+          <%end%>
+
+
+          <%= link_to resume_path, :class => ( (current_page?(resume_path))? "link_active" : "link" ), :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"履歷表" do%>
+            <span class="glyphicon glyphicon-file"></span>
+          <%end%>
+
+          <%= link_to information_path, :class => ( (current_page?(information_path))? "link_active" : "link" ), :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"基本資料" do%>
+            <span class="glyphicon glyphicon-user"></span>
+          <%end%>
+
+          <%= link_to destroy_user_session_path, :method => :delete, :class=>( (current_page?(destroy_user_session_path))? "link_active" : "link" ), :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"登出" do%>
+            <span class="glyphicon glyphicon-off"></span>
+          <%end%>
+      </div>
+
+        <%else%>
+
+        <div class=" right padding_r">
+          <%#= link_to new_registration_path(:user), :class => "btn btn-default" do%>
+            <!-- <span class="glyphicon glyphicon-pencil"></span> -->
+            <%#="註冊"%>
+          <%#end%>
+
+          <%#= link_to new_session_path(:user), :class => "btn btn-default" do%>
+            <!-- <span class="glyphicon glyphicon-log-in"></span> -->
+            <%#="登入"%>
+          <%#end%>
+
+          <%=link_to  new_company_form_path, :class => "btn btn-default" do%>
+            發布職缺
+          <%end%>
+
+          <%= link_to user_omniauth_authorize_path(:facebook), :class => "btn btn-default fb", :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"使用Facebook登入可收藏您喜愛的文章或職缺 。Yourator絕不會主動在您的臉書上貼文，請安心使用Facebook登入。" do%>
+            <span class="fa fa-facebook-square"></span>
+            Facebook 登入
+          <%end%>
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrapper">
+  <div class="<%=is_fluid?%>">
+    <%= yield %>
+  </div>
+</div>
+
+<footer class="footer-bg">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="copy">
+          <p>&copy Copyright 2015 Yourator. All Rights Reserved.</p>
+         </div>
+      </div>
+      <div class="col-md-4">
+        <div class="footer-nav">
+          <%=link_to "yourator介紹", about_path, :class=>"btn btn-inverse btn-small"%>
+          <%=link_to "個資法宣告", privacy_path, :class=>"btn btn-inverse btn-small"%>
+          <%=link_to "張貼職缺", new_company_form_path, :class=>"btn btn-inverse btn-small"%>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

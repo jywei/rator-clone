@@ -1,0 +1,210 @@
+<% if @company.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
+
+  <ul>
+  <% @company.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<%end%>
+
+<div class="col-md-8">
+  <div class="form-group">
+    <%= c.label :sequence, "首頁顯示(填數字最多五個，大到小):"%>
+    <%= c.text_field :sequence, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :en_name, "英文名稱（網址用!!請勿加空白!!!）:"%>
+    <%= c.text_field :en_name, :class => "form-control", :required => true%>
+  </div>
+  <div class="form-group">
+    <%= c.label :name, "公司名稱Company:"%>
+    <%= c.text_field :name, :class => "form-control", :required => true%>
+  </div>
+  <div class="form-group">
+    <%= c.label :brand, "品牌名稱Brand:"%>
+    <%= c.text_field :brand, :class => "form-control", :required => true%>
+  </div>
+  <div class="form-group">
+  <%= c.label :company_category_id, "類別:"%>
+  <%= c.collection_select :company_category_id, CompanyCategory.all, :id, :name, {}, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+  <%= c.label :company_tag_list, "標籤tags"%>
+  <%= c.text_field :company_tag_list, :class => "form-control", :id=>"company_tag_list" %>
+  </div>
+  <div class="form-group">
+    <%= c.label :phone, "電話Phone:"%>
+    <%= c.phone_field :phone, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :email, "E-mail:"%>
+    <%= c.email_field :email, :class => "form-control", :required => true%>
+  </div>
+  <div class="form-group">
+  <%= c.label :area_id, "公司地區:"%>
+  <%= c.collection_select :area_id, Area.all, :id, :name, {}, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :address, "地址Address:"%>
+    <%= c.text_field :address, :class => "form-control", :required => true%>
+  </div>
+  <div class="form-group">
+    <%= c.label :video, "影片Video:"%>
+    <%= c.text_field :video, :class => "form-control"%>
+    範例:www.youtube.com/watch?v=<span style="color:#16a">v4yHXWvIMqM</span>請貼藍色這段
+  </div>
+  <div class="form-group">
+    <%= c.label :interview, "訪談影片interview:"%>
+    <%= c.text_field :interview, :class => "form-control"%>
+    範例:www.youtube.com/watch?v=<span style="color:#16a">v4yHXWvIMqM</span>請貼藍色這段
+  </div>
+  <div class="form-group">
+    <%= c.label :web, "網站Web:(http://)"%>
+    <%= c.url_field :web, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :fb, "FB粉絲專頁:(http://)"%>
+    <%= c.url_field :fb, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :ios, "ios:(http://)"%>
+    <%= c.url_field :ios, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :android, "android:(http://)"%>
+    <%= c.url_field :android, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :scale, "公司規模scale:(人數)"%>
+    <%= c.number_field :scale, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :capital, "資本額Capital:(萬)"%>
+    <%= c.number_field :capital, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :about, "公司介紹about:"%>
+    <%= c.text_area :about, :class => "form-control", :rows=>"8", :required=>true%>
+  </div>
+  <div class="form-group">
+    <%= c.label :idea, "理念idea:"%>
+    <%= c.text_area :idea, :class => "form-control", :rows=>"8"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :story, "故事story:"%>
+    <%= c.text_area :story, :class => "form-control", :rows=>"8"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :welfare, "福利Welfare:"%>
+    <%= c.text_area :welfare, :class => "form-control", :rows=>"8"%>
+  </div>
+  <div class="form-group">
+    <%= c.label :published_on, "刊登時間Published_on:"%>
+    <%= c.date_select :published_on, :class => "form-control", :required => true%>
+  </div>
+  <div class="form-group">
+  <%= c.submit "送出", :class => "btn btn-success"%>
+  </div>
+</div>
+
+
+<div class="col-md-4 padding_r">
+  <!-- Logo -->
+  <div class="image">
+    <div class="field">
+        <%= c.label :logo, "Logo 100x100" %><br>
+        <%= c.file_field :logo%>
+        <%= c.label :logo_alt, "logo_alt" %><br>
+        <%= c.text_field :logo_alt, :class=>"form-control"%>
+    </div>
+  </div>
+  <br>
+  <%if @company.logo.present?%>
+    <%=link_to image_tag(@company.logo.url(:thumb)), @company.logo.url, :target=>"_blank"%>
+    <%=@company.logo_alt%>
+  <%end%>
+  <!-- Banner -->
+  <div class="image">
+    <p>Banner 940x420，首頁，公司，公司詳細</p>
+    <%= c.nested_fields_for :banners do |b| %>
+      <div class="form-group">
+        <%= b.file_field :banner%>
+        <%= b.label :banner_alt, "banner_alt" %><br>
+        <%= b.text_field :banner_alt, :class=>"form-control"%>
+        <%= b.remove_nested_fields_link 'Remove me'%>
+      </div>
+    <% end %>
+    <%=c.add_nested_fields_link :banners, '新增Banner', :class => "btn btn-default"%>
+  </div>
+  <br>
+  <%if @company.banners.present?%>
+    <%@company.banners.each do |b|%>
+      <div>
+        <%=link_to image_tag(b.banner.url(:thumb)),  b.banner.url, :target=>"_blank"%>
+        <%=b.banner_alt%>
+      </div>
+      <br>
+    <%end%>
+  <%end%>
+  <!-- Gallery -->
+  <div class="image">
+    <p>Gallery 都可以，但圖也不要太大，建議940x420</p>
+    <%= c.nested_fields_for :galleries do |g| %>
+      <div class="form-group">
+        <%= g.file_field :gallery%>
+        <%= g.label :gallery_alt, "gallery_alt" %><br>
+        <%= g.text_field :gallery_alt, :class=>"form-control"%>
+        <%= g.remove_nested_fields_link 'Remove me'%>
+      </div>
+    <% end %>
+    <%=c.add_nested_fields_link :galleries, '新增Gallery', :class => "btn btn-default"%>
+    <br>
+  </div>
+  <br>
+  <%if @company.galleries.present?%>
+    <%@company.galleries.each do |g|%>
+      <div>
+        <%=link_to image_tag(g.gallery.url(:thumb)),  g.gallery.url, :target=>"_blank"%>
+        <%=g.gallery_alt%>
+      </div>
+      <br>
+    <%end%>
+  <%end%>
+
+  <!-- 媒體報導 -->
+  <div class="image">
+    <p>媒體報導</p>
+    <%= c.nested_fields_for :socials do |s| %>
+      <div class="form-group">
+        <%= s.label :title, "標題" %><br>
+        <%= s.text_field :title, :class=>"form-control"%><br>
+        <%= s.label :url, "連結" %><br>
+        <%= s.text_field :url, :class=>"form-control"%>
+        <%= s.remove_nested_fields_link 'Remove me'%>
+      </div>
+    <% end %>
+    <%=c.add_nested_fields_link :socials, '新增', :class => "btn btn-default"%>
+  </div>
+  <br>
+  <%if @company.socials.present?%>
+    <%@company.socials.each do |s|%>
+      <div>
+        <%=s.title%><br>
+        <%=link_to s.url,  s.url, :target=>"_blank"%>
+      </div>
+      <br>
+    <%end%>
+  <%end%>
+</div>
+
+<script>
+  $("#company_tag_list").select2({
+    tags: <%=raw CompanyTag.all.map{|t| t.name}%>,
+    tokenSeparators: [',', ' ']
+  });
+</script>
+
+

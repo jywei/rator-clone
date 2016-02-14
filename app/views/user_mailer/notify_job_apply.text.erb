@@ -1,0 +1,17 @@
+Hi, <%= @company.brand %>
+
+您在Yourator所刊登的『<%= @job.name %><%=@job.intern == true ? "(實習)" : ""%>』職缺，收到來自『<%= @user.name %>』的履歷
+
+職缺頁面：
+<%= company_job_url(@company,@job) %>
+
+請點選下連結查閱履歷：
+<%= view_resume_url(@token) %>
+
+友善小提醒：為了打造友善的求職與徵才環境
+（1）若貴公司決定不予面試本求職者，請以email簡短婉拒喔。
+（2）若是本職缺已無徵才需求，請寄信至service@yourator.co通知我們關閉職缺。謝謝!
+
+Yourator | www.yourator.co
+
+**此封為系統信件，請勿回傳，聯繫請寄至service@yourator.co**

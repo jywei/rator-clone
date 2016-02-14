@@ -1,0 +1,82 @@
+<div class="row">
+  <%= render :partial => "admin/companies/sidebar"%>
+  <div class="col-md-10">
+    <div class=" right">
+      <%=link_to edit_admin_article_path(@article), :class => "btn btn-default" do%>
+              <span class="glyphicon glyphicon-edit"></span>
+      <%end%>
+      <%=link_to admin_articles_path, :class=>"btn btn-default" do%>
+      <span class="glyphicon glyphicon-arrow-left"></span>
+      <%end%>
+    </div>
+
+    <br>
+
+    <table class="table table-striped">
+
+      <tr>
+        <th>標題title:</th>
+        <td><%=@article.title%></td>
+      </tr>
+
+      <tr>
+        <th>類別title:</th>
+        <td><%=@article.article_category.name%></td>
+      </tr>
+
+      <tr>
+        <th>文章tags:</th>
+        <td>
+          <%@article.article_tags.each do |t|%>
+          <%=t.name%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>相關公司:</th>
+        <td>
+          <%@article.companies.each do |t|%>
+          <%=t.brand%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>類別title:</th>
+        <td><%=@article.article_category.name%></td>
+      </tr>
+
+      <tr>
+        <th>描述description:</th>
+        <td><%=@article.description%></td>
+      </tr>
+
+      <tr>
+        <th>內容content:</th>
+        <td><%=raw @article.content%></td>
+      </tr>
+
+      <tr>
+        <th>狀態status</th>
+        <td><%=@article.status%></td>
+      </tr>
+
+      <tr>
+        <th>刊登時間Date:</th>
+        <td><%=@article.published_on%></td>
+      </tr>
+
+      <tr>
+        <th>Banner:</th>
+        <td>
+          <%if @article.banner.present?%>
+            <%=link_to image_tag(@article.banner.url(:thumb)), @article.banner.url, :target=>"_blank"%>
+            <%=@article.banner_alt%>
+          <%end%>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="row">
+  <%= render :partial => "admin/companies/sidebar"%>
+  <div class="col-md-10">
+    <div class=" right">
+      <%=link_to edit_admin_company_job_path(@company,@job), :class => "btn btn-default" do%>
+              <span class="glyphicon glyphicon-edit"></span>
+      <%end%>
+      <%=link_to admin_company_jobs_path, :class=>"btn btn-default" do%>
+      <span class="glyphicon glyphicon-arrow-left"></span>
+      <%end%>
+    </div>
+
+    <br>
+
+    <table class="table table-striped">
+
+      <tr>
+        <th>職缺名稱Name:</th>
+        <td><%=@job.name%></td>
+      </tr>
+
+      <tr>
+        <th>job類別:</th>
+        <td><%=@job.job_category.name%></td>
+      </tr>
+
+      <tr>
+        <th>標籤Tag</th>
+        <td>
+          <%@job.tags.each do |t|%>
+            <%=t.name%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>工作內容Content:</th>
+        <td><%=simple_format @job.content%></td>
+      </tr>
+
+      <tr>
+        <th>條件要求Skill:</th>
+        <td><%=simple_format @job.skill%></td>
+      </tr>
+
+      <tr>
+        <th>薪資待遇Range:</th>
+
+        <td>
+          <%if @job.year_salary_floor.present?%>
+          NT$<%= number_with_delimiter(@job.year_salary_floor)%> - NT$<%=number_with_delimiter(@job.year_salary_ceiling)%>（年薪）
+          <%elsif @job.salary_floor.present?%>
+          NT$<%= number_with_delimiter(@job.salary_floor)%> - NT$<%=number_with_delimiter(@job.salary_ceiling)%>
+          <%else%>
+          面議
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>是否為實習職缺:</th>
+        <td><%=@job.intern == true ? "Yes" : "No"%></td>
+      </tr>
+
+      <tr>
+        <th>職缺狀態Status:</th>
+        <td><%=@job.status%></td>
+      </tr>
+
+      <tr>
+        <th>刊登時間Published_on:</th>
+        <td><%=@job.published_on%></td>
+      </tr>
+
+    </table>
+  </div>
+</div>

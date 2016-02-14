@@ -1,0 +1,187 @@
+<div class="row">
+  <%= render :partial => "sidebar"%>
+  <div class="col-md-10">
+    <div class=" right">
+
+      <%=link_to admin_company_members_path(@company), :class => "btn btn-default" do%>
+          <span class="fa fa-child"></span>
+      <%end%>
+
+      <%=link_to admin_company_jobs_path(@company), :class => "btn btn-default" do%>
+          <span class="glyphicon glyphicon-th-list"></span>
+      <%end%>
+
+      <%=link_to edit_admin_company_path(@company), :class => "btn btn-default" do%>
+              <span class="glyphicon glyphicon-edit"></span>
+      <%end%>
+      <%=link_to admin_companies_path, :class=>"btn btn-default" do%>
+      <span class="glyphicon glyphicon-arrow-left"></span>
+      <%end%>
+    </div>
+
+    <br>
+
+    <table class="table table-striped">
+      <tr>
+        <th>公司名稱Company:</th>
+        <th><h2><%=@company.name%></h2></th>
+      </tr>
+
+      <tr>
+        <th>Logo</th>
+         <td>
+            <%if @company.logo.present?%>
+            <%=link_to image_tag(@company.logo.url(:thumb)), @company.logo.url, :target=>"_blank"%>
+            <%=@company.logo_alt%>
+            <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>品牌名稱Brand:</th>
+        <td><%=@company.brand%></td>
+      </tr>
+
+      <tr>
+        <th>類別:</th>
+        <td><%=@company.company_category.name%></td>
+      </tr>
+
+      <tr>
+        <th>標籤Tag:</th>
+        <td>
+          <%@company.tags.each do |t|%>
+            <%=t.name%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>電話Phone:</th>
+        <td><%=@company.phone%></td>
+      </tr>
+
+      <tr>
+        <th>E-mail:</th>
+        <td><%=@company.email%></td>
+      </tr>
+
+      <tr>
+        <th>地區:</th>
+        <td><%=@company.area.name%></td>
+      </tr>
+
+      <tr>
+        <th>地址Address:</th>
+        <td><%=@company.address%></td>
+      </tr>
+
+      <tr>
+        <th>影片Video:</th>
+        <td><%=@company.video %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>ios連結:</th>
+        <td><%=link_to @company.ios, @company.ios, target: "_blank" if @company.ios.present? %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>android連結:</th>
+        <td><%=link_to @company.android, @company.android, target: "_blank" if @company.android.present? %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>FB粉絲專頁:</th>
+        <td><%=link_to @company.fb, @company.fb, target: "_blank" if @company.fb.present? %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>網站Web:</th>
+        <td><%=link_to @company.web, @company.web, target: "_blank" if @company.web.present? %></td>
+      </tr>
+
+      <tr>
+        <th>公司規模Scale:</th>
+        <td><%=@company.scale%>人</td>
+      </tr>
+
+      <tr>
+        <th>資本額Capital:</th>
+        <td><%=@company.capital%>萬</td>
+      </tr>
+
+      <tr>
+        <th>公司介紹:</th>
+        <td><%=simple_format @company.about%></td>
+      </tr>
+
+      <tr>
+        <th>理念Ides:</th>
+        <td><%=simple_format @company.idea%></td>
+      </tr>
+
+      <tr>
+        <th>故事Story:</th>
+        <td><%=simple_format @company.story %></td>
+      </tr>
+
+      <tr>
+        <th>福利Welfare:</th>
+        <td><%=simple_format @company.welfare%></td>
+      </tr>
+
+      <tr>
+        <th>媒體報導:</th>
+        <td>
+          <%if @company.socials.present?%>
+            <%@company.socials.each do |s|%>
+              <div>
+                 <%=s.title%><br>
+                <%=link_to s.url,  s.url, :target=>"_blank"%>
+              </div>
+              <br>
+            <%end%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Banner:</th>
+        <td>
+          <%if @company.banners.present?%>
+            <%@company.banners.each do |b|%>
+              <div>
+                <%=link_to image_tag(b.banner.url(:medium)),  b.banner.url, :target=>"_blank"%>
+                <%=b.banner_alt%>
+              </div>
+              <br>
+            <%end%>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Gallery:</th>
+        <td>
+          <%if @company.galleries.present?%>
+            <%@company.galleries.each do |g|%>
+              <div>
+                <%=link_to image_tag(g.gallery.url(:medium)),  g.gallery.url, :target=>"_blank"%>
+                <%=g.gallery_alt%>
+              </div>
+              <br>
+            <%end%>
+          <%end%>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+
+</div>

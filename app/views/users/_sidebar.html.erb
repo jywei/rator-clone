@@ -1,0 +1,51 @@
+<div class="text_p">
+  <p>Hi <%=@user.name%>，Yourator不同於人力銀行 ，除非主動投遞履歷，徵才企業不會看見您的
+個人資料。請安心編輯您的履歷資料，讓您隨時為應徵職缺做好準備。</p>
+</div>
+<%if @user.photo.present?%>
+  <div class="fb_center text_p">
+    <%=image_tag @user.photo, alt: @user.name,:class=>"photo"%>
+    <p>更新照片，請至"基本資料"上傳大頭照</p>
+  </div>
+
+<%elsif @user.fb_image.present?%>
+  <div class="fb_center text_p">
+    <%=image_tag @user.fb_image+"?type=large", alt: @user.name,:class=>"fb_image"%>
+    <p>Facebook 會員的顯示圖片是跟著 Facebook 替換的，當你替換 Facebook 顯示圖片，這邊就也會改變。</p>
+    <p><i class="glyphicon glyphicon-exclamation-sign"></i>更新照片，請至"基本資料"上傳大頭照</p>
+  </div>
+<%else%>
+  <p>上傳照片，請至"基本資料"上傳大頭照</p>
+<%end%>
+
+<div class="list-group admin-sidebar">
+<%=link_to information_path, :class=>"list-group-item " do%>
+  <span class="glyphicon glyphicon-user"></span>
+  基本資料
+<%end%>
+
+<%=link_to resume_path, :class=>"list-group-item " do%>
+  <span class="glyphicon glyphicon-file"></span>
+  履歷表
+<%end%>
+
+<%=link_to preview_path, :class=>"list-group-item " do%>
+  <span class=" glyphicon glyphicon-eye-open"></span>
+  履歷表預覽
+<%end%>
+
+<%=link_to follows_path, :class=>"list-group-item " do%>
+  <span class="glyphicon glyphicon-inbox"></span>
+  收藏資訊
+<%end%>
+
+<%#=link_to user_resume_user_path(@user), :class=>"list-group-item " do%>
+  <!-- <span class="glyphicon glyphicon-floppy-disk"></span>
+  公司看的履歷 -->
+<%#end%>
+
+<%#=link_to edit_registration_path(:user), :class=>"list-group-item " do%>
+ <!--  <span class="glyphicon glyphicon-floppy-disk"></span>
+  更改密碼 -->
+<%#end%>
+</div>

@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="container">
+    <div class=" col-md-2 com_sidebar">
+    <div class="list-group">
+      <%=link_to companies_path, :class=>"list-group-item", :style=>"text-align:center" do%>
+        所有企業
+      <%end%>
+      <%=link_to companies_path(:career_in=>"all"), :class=>"list-group-item #{is_career_in_active?("all")}", :style=>"text-align:center" do%>
+        徵才中企業
+      <%end%>
+    </div>
+    <div class="sidebar">
+      <p>地區</p>
+    </div>
+    <div class="list-group">
+      <%@areas.each do |a| %>
+        <%if a.companies.present?%>
+          <%=link_to companies_path(:area=>a, :category=>params[:category], :career_in=> params[:career_in]), :class=>"list-group-item #{is_area_active?(a)}" do%>
+          <%=a.name%>
+            <span class="badge">
+              <%=a.company_filter_by_area(params[:career_in])%>
+            </span>
+          <%end%>
+        <%end%>
+      <%end%>
+    </div>
+    <div class="sidebar">
+      <p>分類</p>
+    </div>
+    <div class="list-group">
+      <%@categories.each do |c| %>
+        <%if c.companies.present?%>
+          <%=link_to companies_path(:category=>c, :area=>params[:area], :career_in=> params[:career_in]), :class=>"list-group-item #{is_category_active?(c)}" do%>
+          <%=c.name%>
+          <span class="badge">
+            <%=c.company_filter_by_category(params[:area], params[:career_in])%>
+          </span>
+          <%end%>
+        <%end%>
+      <%end%>
+    </div>
+    <div class="sidebar">
+      <p>標籤</p>
+    </div>
+    <%@tags.each do |t|%>
+      <% tag_count = t.tag_company_count %>
+      <%if tag_count != 0%>
+        <%=link_to companies_path(:tag=>t), :class => "btn btn-primary btn-xs" do%>
+        <%=t.name%>
+        <span class="badge">
+          <%=tag_count%>
+        </span>
+        <%end%>
+      <%end%>
+    <%end%>
+
+    </div>
+    <div class="col-md-10">
+      <div class="row">
+        <%@companies.each do |c|%>
+        <div class="col-md-4">
+          <%=link_to company_path(c), :"data-no-turbolink" => true, :class=>"hvr-grow" do%>
+              <div class="frame-top col-md-12">
+              <%if c.banners.first.present?%>
+                <%=image_tag(c.banners.first.banner.url(:medium), alt:c.banners.first.banner_alt)%>
+              <%end%>
+              </div>
+              <div class="frame-bottom col-md-12">
+                <div class="content-top">
+                <%if c.logo.present?%>
+                  <%=image_tag(c.logo.url(:thumb), alt:"#{c.logo_alt}", :size=>"40x40")%>
+                <%end%>
+                  <%=c.brand%>
+                </div>
+                <div class="content-center">
+                   <%=c.about%>
+                </div>
+                <div class="content-bottom">
+                  <p>地區: <%=c.area.name%></p>
+                  <p>分類: <%=c.company_category.name%></p>
+                  <span><i class="fa fa-tags"></i>
+                  <%c.tags.each do |t|%>
+                    #<%=t.name%>
+                  <%end%>
+                  </span>
+                </div>
+              </div>
+          <%end%>
+        </div>
+        <%end%>
+      </div>
+      <%= paginate @companies, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-sm"%>
+    </div>
+  </div>
+</div>
+

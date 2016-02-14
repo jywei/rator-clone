@@ -1,0 +1,52 @@
+<div class="col-md-3">
+    <div class=" col-md-12 sidebar">
+      <p>最新文章</p>
+    </div>
+    <div class=" col-md-12 sidebar-content">
+      <ul>
+      <%@new_articles.each do |a|%>
+        <div class="article-new">
+          <%=link_to article_path(a) do%>
+            <li>
+              <span><%=a.title%></span>
+            </li>
+          <%end%>
+        </div>
+      <%end%>
+      </ul>
+    </div>
+    <br>
+
+    <div class=" col-md-12 sidebar">
+      <p>文章類別</p>
+    </div>
+    <div class=" col-md-12 sidebar-content">
+      <ul>
+      <%@categories.each do |a|%>
+        <div class="article-new">
+          <%=link_to articles_path(:category=>a) do%>
+            <%if a.articles.present?%>
+             <li><span><%=a.name%></span></li>
+            <%end%>
+          <%end%>
+        </div>
+      <%end%>
+      </ul>
+    </div>
+    <br>
+
+    <div class=" col-md-12 sidebar">
+      <p>文章標籤</p>
+    </div>
+    <div class=" col-md-12 sidebar-content">
+      <%@tags.each do |a|%>
+          <%if a.articles.present?%>
+            <%=link_to articles_path(:tag=>a), :class=>"btn btn-primary btn-xs" do%>
+               <span><%=a.name%></span>
+            <%end%>
+          <%end%>
+      <%end%>
+    </div>
+
+    <div class="fb-page" data-href="https://www.facebook.com/Yourator%E8%81%B7%E6%B6%AF%E6%83%85%E5%A0%B1-1655017781444471/?fref=ts" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"></div>
+  </div>

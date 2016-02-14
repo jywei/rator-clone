@@ -1,0 +1,175 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-10 ">
+    <div class="show-top">
+
+        <div class="show-top-left pull-left col-md-9">
+            <h1>
+            <%if @company.logo.present?%>
+            <%=image_tag(@company.logo.url(:thumb), size:"44x44", alt:@company.logo_alt)%>
+            <%end%>
+            <%=link_to @company.brand, company_path(@company)%> - <%=@job.name%>
+
+          <%if current_user%>
+            <%=link_to check_resume_company_job_path(@company,@job), :class=>"resume-button btn btn-success" do%>
+              <span class="glyphicon glyphicon-list-alt"></span>
+              投遞履歷
+            <%end%>
+          <%else%>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-list-alt"></span>
+                投遞履歷
+              </button>
+          <%end%>
+          </h1>
+      </div>
+
+        <div class="show-top-right pull-right">
+
+          <span class="fb-share-button" data-href="<%=company_job_url(@company,@job)%>" data-layout="button_count"></span>
+
+
+          <%if current_user%>
+             <span><%= link_to follow_company_job_path(@company, @job),:method=>:post, :class => "btn #{follow_job_class(@job)}", :id=>"follow_job_class", :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"#{follow_job_status(@job)}", remote: true do%>
+            <%end%>
+            </span>
+          <%else%>
+            <!-- Button trigger modal -->
+                <span>
+                  <a type="button" class="btn <%=follow_job_class(@company)%>" id="follow_job_class" data-toggle="modal" data-target="#myModal" title="尚未登入"></a>
+                </span>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <div class="modal-title" id="myModalLabel">
+                        <p>登入Yourator 投遞履歷！</p>
+                        <p>
+                        Yourator絕不會主動在您的臉書上貼文，請安心使用Facebook登入。
+                        </p>
+                      <%=link_to  user_omniauth_authorize_path(:facebook), :class => "btn btn-default fb" do%><span class="fa fa-facebook-square"></span>
+                       Facebook 登入
+                       <%end%>
+                       <br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <%end%>
+
+          <span class="glyphicon glyphicon-eye-open"></span>
+          <%=@job.views_count%>
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+    <div class="col-md-8 job-center-left">
+      <%if @job.intern == true%>
+        <span>*此職缺為實習</span>
+      <%end%>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">工作內容:</h3>
+        </div>
+        <div class="panel-body">
+          <%=simple_format @job.content%>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">條件要求:</h3>
+        </div>
+        <div class="panel-body">
+          <%=simple_format @job.skill%>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">薪資範圍:</h3>
+        </div>
+        <div class="panel-body">
+          <%if @job.year_salary_floor.present?%>
+          NT$<%= number_with_delimiter(@job.year_salary_floor)%> - NT$<%=number_with_delimiter(@job.year_salary_ceiling)%>（年薪）
+          <%elsif @job.salary_floor.present?%>
+          NT$<%= number_with_delimiter(@job.salary_floor)%> - NT$<%=number_with_delimiter(@job.salary_ceiling)%>
+          <%else%>
+          面議
+          <%end%>
+        </div>
+      </div>
+
+      <%if @job.company.welfare.present?%>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">公司福利:</h3>
+          </div>
+          <div class="panel-body">
+            <%=simple_format @job.company.welfare%>
+          </div>
+        </div>
+      <%end%>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">刊登日期:</h3>
+        </div>
+        <div class="panel-body">
+          <%=@job.published_on%>
+        </div>
+      </div>
+
+      <div><i class="fa fa-tags"></i>
+        <%@job.tags.each do |t|%>
+        <span class="show-tag">
+          <%=link_to jobs_path(:tag=>t) do%>
+           <span>#<%=t.name%></span>
+          <%end%>
+        </span>
+        <%end%>
+      </div>
+      </div>
+
+    <div class="col-md-4 job-center-right">
+      <%if @other_jobs.count > 1 %>
+        <h3>此公司其他職缺</h3>
+        <div>
+          <%@other_jobs.each do |j|%>
+              <%=link_to company_job_path(@company,j) do%>
+                <%if @job != j%>
+                  <div class="list-group-item">
+                   <span class="btn btn-danger btn-xs">徵才中</span>
+                      <span><%=j.name%></span>
+                    <span class="pull-right"><%=j.published_on%></span>
+                    <div class="clearfix"></div>
+                  </div>
+                <%end%>
+              <%end%>
+          <%end%>
+        </div>
+      <%end%>
+
+      <%=render :partial => "companies/company_information", :locals=>{:company => @company} %>
+
+      </div>
+    </div>
+</div>
+
+
+<%= content_for :head do %>
+    <%= tag(:meta, :content => "『#{@job.company.brand}』誠徵『#{@job.name}』", :property => "og:title") %>
+    <%= tag(:meta, :content => truncate( @job.content, :length => 150 ), :property => "og:description") %>
+    <%= tag(:meta, :content => "article", :property => "og:type") %>
+    <%if @company.banners.first.present?%>
+    <%= tag(:meta, :content => asset_url(@company.banners.first.banner.url), :property => "og:image") %>
+    <%end%>
+    <%= tag(:meta, :content => company_job_url(@company,@job), :property => "og:url") %>
+    <%= tag(:meta, :content => "Yourator職涯情報", :property => "og:site_name") %>
+<% end %>
+

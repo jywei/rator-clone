@@ -1,0 +1,187 @@
+<div class="row">
+  <div class="col-md-offset-1 col-md-10 ">
+    <div class="show-top">
+
+        <div class="show-top-left pull-left">
+          <h1>
+             <%if @company.logo.present?%>
+              <%=image_tag(@company.logo.url(:thumb), size:"44x44", alt: @company.logo_alt)%>
+            <%end%>
+            <%=@company.brand%>
+          </h1>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="show-top-right pull-right">
+
+          <span class="fb-share-button" data-href="<%= company_url(@company) %>" data-layout="button_count"></span>
+          <%if current_user%>
+            <span><%= link_to follow_company_path(@company),:method=>:post, :class => "btn #{follow_class(@company)}", :id=>"follow_class", :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"#{follow_status(@company)}", remote: true do%>
+            <%end%>
+            </span>
+          <%else%>
+            <!-- Button trigger modal -->
+                <span>
+                  <a type="button" class="btn <%=follow_class(@company)%>" id="follow_class" data-toggle="modal" data-target="#myModal" title="尚未登入"></a>
+                </span>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <div class="modal-title" id="myModalLabel">
+                        <p>登入Yourator 投遞履歷！</p>
+                        <p>
+                        Yourator絕不會主動在您的臉書上貼文，請安心使用Facebook登入。
+                        </p>
+                      <%=link_to  user_omniauth_authorize_path(:facebook), :class => "btn btn-default fb" do%><span class="fa fa-facebook-square"></span>
+                       Facebook 登入
+                       <%end%>
+                       <br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <%end%>
+          <span class="glyphicon glyphicon-eye-open"></span>
+          <%=@company.views_count%>
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+
+    <div class="show-banner">
+      <%if @company.interview.present?%>
+        <div class="iframe-rwd">
+
+       <iframe src="https://www.youtube.com/embed/<%=@company.interview%>?hd=1&amp;autoplay=1&amp;loop=1&amp;playlist=<%=@company.interview%>" allowfullscreen></iframe>
+
+        </div>
+      <%elsif @company.banners.first.present?%>
+        <%=image_tag(@company.banners.first.banner.url, alt:@company.banners.first.banner_alt)%>
+      <%end%>
+    </div>
+
+    <div class="col-md-8 show-center-left">
+        <i class="fa fa-tags"></i>
+        <%@company.tags.each do |t|%>
+          <span class="show-tag">
+            <%=link_to companies_path(:tag=>t) do%>
+            <span>#<%=t.name%></span>
+            <%end%>
+          </span>
+        <%end%>
+      <%if @company.members.present?%>
+        <h3>公司成員</h3>
+            <div class="row">
+            <%@company.members.each do |m|%>
+              <div class="col-xs-3 col-md-3 member-photo" data-toggle="tooltip" data-placement="bottom" title="<%=m.about%>">
+                <%=image_tag(m.photo.url(:thumb), alt: m.photo_alt)%>
+                <h4><%=m.name%></h4>
+                <span><%=m.office%></span>
+              </div>
+            <%end%>
+          </div>
+        <%end%>
+
+      <h3>公司介紹</h3>
+      <div class="company-content">
+        <%=simple_format @company.about%>
+      </div>
+
+      <%if @company.idea.present?%>
+        <h3>公司理念</h3>
+        <div class="company-content">
+          <%=simple_format @company.idea%>
+        </div>
+      <%end%>
+
+      <%if @company.story.present?%>
+        <h3>創辦故事</h3>
+        <div class="company-content">
+          <%=simple_format @company.story%>
+        </div>
+      <%end%>
+
+      <%if @company.socials.present?%>
+        <h3>媒體報導</h3>
+          <div class="company-content">
+            <%@company.socials.each do |s|%>
+              <div>
+                <p><%=link_to s.title,  s.url, :target=>"_blank"%></p>
+              </div>
+            <%end%>
+          </div>
+      <%end%>
+
+      <%if @company.welfare.present?%>
+      <h3>薪資福利</h3>
+      <div class="company-content">
+        <%=simple_format @company.welfare%>
+      </div>
+      <%end%>
+
+      <div class="panel panel-default">
+        <div class="panel-heading show-now-job">目前職缺</div>
+        <div class="panel-body">
+        <%if @jobs.present?%>
+          <%@jobs.each do |j|%>
+            <%if j.status=="career_begin"%>
+              <%=link_to company_job_path(j.company,j), :class=>"list-group-item" do%>
+                <span class="btn btn-danger btn-xs">徵才中</span>
+                <span><%=j.name%></span>
+                <span class="pull-right"><%=j.published_on%></span>
+                <div class="clearfix"></div>
+              <%end%>
+            <%end%>
+          <%end%>
+        <%else%>
+          <div class="show-no-job">
+            目前尚未有新職缺
+            <br>
+            <br>
+            <div class="list-group">
+              <%=link_to "去看更多職缺!!", jobs_path, :class=>"list-group-item list-group-item-info"%>
+            </div>
+          </div>
+        <%end%>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 show-center-right">
+
+      <%if @company.galleries.present?%>
+        <h3>公司相簿</h3>
+        <div>
+          <%@company.galleries.each do |g|%>
+              <%=link_to g.gallery.url, :"data-lightbox"=>"roadtrip" do%>
+                <%=image_tag(g.gallery.url, alt:g.gallery_alt)%>
+              <%end%>
+              <%=g.gallery_alt%>
+          <%end%>
+        </div>
+      <%end%>
+
+      <%=render :partial => "companies/company_information", :locals=>{:company => @company} %>
+
+    </div>
+    </div>
+    <div class="col-md-12 show-bottom">
+    </div>
+  </div>
+</div>
+
+<%= content_for :head do %>
+    <%= tag(:meta, :content => @company.brand, :property => "og:title") %>
+    <%= tag(:meta, :content => truncate(@company.about, :length => 150 ), :property => "og:description") %>
+    <%= tag(:meta, :content => "company", :property => "og:type") %>
+    <%if @company.banners.first.present?%>
+      <%= tag(:meta, :content => asset_url(@company.banners.first.banner.url), :property => "og:image") %>
+    <%end%>
+    <%= tag(:meta, :content => company_url(@company), :property => "og:url") %>
+    <%= tag(:meta, :content => "Yourator職涯情報", :property => "og:site_name") %>
+<% end %>

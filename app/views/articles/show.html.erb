@@ -1,0 +1,152 @@
+
+  <div class="col-md-9 article-show">
+    <div class="col-md-12">
+      <h1><%=@article.title%></h1>
+    </div>
+
+    <div class="col-md-12">
+      <%=image_tag(@article.banner.url, alt:@article.banner_alt)%>
+    </div>
+
+    <div class="col-md-12 margin-bottom-clear">
+      <span class="pull-left article-show-catrgory">
+        <span class="category-title">分類：</span>
+        <span class="tag-content">
+          <%=@article.article_category.name%>
+        </span>
+      </span>
+
+    <span class="article-show-top-right pull-right">
+      <span class="fb-share-button" data-href="<%=article_url(@article)%>" data-layout="button_count"></span>
+
+          <%if current_user%>
+            <span><%= link_to follow_article_path(@article),:method=>:post, :class => "btn #{follow_article_class(@article)}", :id=>"follow_article_class", :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"#{follow_article_status(@article)}", remote: true do%>
+            <%end%>
+            </span>
+          <%else%>
+            <!-- Button trigger modal -->
+                <span>
+                  <a type="button" class="btn <%=follow_article_class(@article)%>" id="follow_article_class" data-toggle="modal" data-target="#myModal" title="尚未登入"></a>
+                </span>
+
+              <!-- Modal -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <div class="modal-title" id="myModalLabel">
+                        <p> 登入Yourator 可收藏文章或職缺！</p>
+                        <p>
+                        Yourator絕不會主動在您的臉書上貼文，請安心使用Facebook登入。
+                        </p>
+                        <%=link_to  user_omniauth_authorize_path(:facebook), :class => "btn btn-default fb" do%><span class="fa fa-facebook-square"></span>
+                         Facebook 登入
+                         <%end%>
+                         <br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          <%end%>
+          <span class="glyphicon glyphicon-eye-open"></span>
+          <%=@article.views_count%>
+    </span>
+
+    <div class="clearfix"></div>
+    </div>
+
+    <div class="col-md-12 margin-bottom-clear">
+      <span class="pull-left article-show-tag">
+           <span class="tag-title">標籤：</span>
+           <%@article.article_tags.each do |t|%>
+            <%=link_to articles_path(:tag => t) do%>
+               <span class="tag-content">
+                #<%=t.name%>
+                </span>
+            <%end%>
+          <%end%>
+      </span>
+
+      <span class="pull-right">
+        <%=@article.published_on%>
+        by
+        <span class="author"><%=@article.user.try(:nickname)%></span>
+      </span>
+
+      <div class="clearfix"></div>
+      <hr>
+    </div>
+
+    <div class="col-md-12 article-show-content">
+      <%=raw @article.content%>
+    </div>
+
+    <%if @article_company.present?%>
+      <div class="col-md-12 sidebar no-padding">
+        <p>
+         相關推薦公司
+        </p>
+      </div>
+
+      <div class="col-md-12 no-padding">
+          <%@article_company.each do |c|%>
+            <%if c.published_on <= Time.now%>
+              <%=link_to company_path(c) do%>
+                <div class="col-md-3 no-padding">
+                   <div class="col-md-12 no-padding">
+                   <%=image_tag(c.banners.first.banner.url(:medium), alt:c.banners.first.banner_alt)%>
+                  </div>
+                  <div class="col-md-12 more-title no-padding">
+                    <%=c.brand%>
+                  </div>
+                </div>
+              <%end%>
+            <%end%>
+            <%end%>
+      </div>
+
+    <div class="list-group col-md-12 more-company">
+      <%=link_to "(っ・Д・)っ 認識更多新創公司", companies_path, :class=>"list-group-item list-group-item-info"%>
+    </div>
+    <%end%>
+
+    <div class="col-md-12 sidebar no-padding">
+      <p>
+       相關分類文章
+      </p>
+    </div>
+
+    <div class="col-md-12 no-padding">
+      <%@articles_related.each do |a|%>
+        <%if a != @article%>
+          <%=link_to article_path(a) do%>
+
+          <div class="col-md-3 no-padding">
+             <div class="col-md-12 no-padding">
+              <%=image_tag(a.banner.url(:art), alt:a.banner_alt)%>
+            </div>
+            <div class="col-md-12 more-title no-padding">
+              <%=a.title%>
+            </div>
+          </div>
+
+          <%end%>
+        <%end%>
+      <%end%>
+
+      <div class="fb-comments" data-href="<%=article_url(@article)%>" data-numposts="5" width="100%"></div>
+    </div>
+  </div>
+
+  <%=render :partial => "sidebar"%>
+
+  <%= content_for :head do %>
+    <%= tag(:meta, :content => @article.title, :property => "og:title") %>
+    <%= tag(:meta, :content => truncate( strip_tags(@article.content), :length => 150 ), :property => "og:description") %>
+    <%= tag(:meta, :content => "article", :property => "og:type") %>
+    <%= tag(:meta, :content => asset_url(@article.banner.url), :property => "og:image") %>
+    <%= tag(:meta, :content => article_url(@article), :property => "og:url") %>
+    <%= tag(:meta, :content => "Yourator職涯情報", :property => "og:site_name") %>
+<% end %>

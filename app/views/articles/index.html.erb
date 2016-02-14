@@ -1,0 +1,58 @@
+
+
+  <div class="col-md-9">
+    <div class=" col-md-4 article-head-left">
+      <%if params[:category]%>
+        <p><%=@category.name%></p>
+      <%elsif params[:tag]%>
+        <p><%=@tag.name%></p>
+      <%else%>
+        <p>全部文章</p>
+      <%end%>
+    </div>
+    <div class=" col-md-8 article-head-right">
+    </div>
+
+
+    <%@articles.each do |a|%>
+      <div class="row article-wrapper">
+        <%if a.banner.present?%>
+        <div class="col-md-4 article-banner">
+          <%=link_to image_tag(a.banner.url(:medium), alt:a.banner_alt), article_path(a), :class=>"hvr-grow"%>
+        </div>
+        <%end%>
+
+        <div class="col-md-8 article-banner">
+          <div class=" article-category">
+            <%=a.article_category.name%>
+          </div>
+
+          <div class="col-md-12 article-title">
+            <%=link_to a.title, article_path(a)%>
+          </div>
+
+          <div class="col-md-12 article-content">
+           <%=a.description%>
+          </div>
+
+          <div class="col-md-12">
+            <span class="pull-right">
+              <span class="author"> <%=a.user.try(:nickname)%> </span>
+              <%=a.published_on%>
+              <span class="glyphicon glyphicon-eye-open"></span>
+               <%=a.views_count%>
+              </span>
+          </div>
+
+        </div>
+      </div>
+      <%if a != @articles.last%>
+        <hr>
+      <%end%>
+    <%end%>
+    <%= paginate @articles, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-sm"%>
+
+  </div>
+
+  <%=render :partial => "sidebar"%>
+

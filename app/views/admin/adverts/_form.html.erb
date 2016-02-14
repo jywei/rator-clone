@@ -1,0 +1,61 @@
+<% if @advert.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@advert.errors.count, "error") %> prohibited this advert from being saved:</h2>
+
+  <ul>
+  <% @advert.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<%end%>
+<div class="col-md-12">
+  <div class="form-group">
+    <%= a.label :name, "名稱:"%>
+    <%= a.text_field :name, :class => "form-control"%>
+  </div>
+
+  <div class="form-group">
+    <%= a.label :content, "內容:"%>
+    <%= a.text_area :content, :class => "form-control"%>
+  </div>
+
+  <div class="form-group">
+    <%= a.label :date, "時間:"%>
+    <%= a.date_select :date, :class => "form-control"%>
+  </div>
+
+  <div class="image">
+    <p>Banner(預設1200x600的比例)</p>
+    <%= a.nested_fields_for :advert_banners do |b| %>
+      <div class="form-group">
+        <%= b.file_field :banner%>
+        <%= b.label :banner_alt, "banner_alt" %><br>
+        <%= b.text_field :banner_alt, :class=>"form-control"%>
+        <%= b.label :banner_url, "banner_url 沒有連結請設#，並選_self" %><br>
+        <%= b.text_field :banner_url, :class=>"form-control"%>
+        <%= b.label :target, "target"%><br>
+        <%= b.select :target,[["_blank","_blank"],["_self","_self"]],{},:class => "form-control"%>
+        <%= b.remove_nested_fields_link 'Remove me'%>
+        <hr>
+      </div>
+    <% end %>
+    <%=a.add_nested_fields_link :advert_banners, '新增Banner', :class => "btn btn-default"%>
+  </div>
+
+  <br>
+  <%if @advert.advert_banners.present?%>
+    <%@advert.advert_banners.each do |b|%>
+      <div>
+        <%=link_to image_tag(b.banner.url(:thumb)),  b.banner.url, :target=>"_blank"%>
+        <%=b.banner_alt%>
+      </div>
+      <br>
+    <%end%>
+  <%end%>
+
+  <div class="form-group">
+  <%= a.submit "送出", :class => "btn btn-success"%>
+  </div>
+
+</div>

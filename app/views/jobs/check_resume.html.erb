@@ -1,0 +1,275 @@
+<div class="comtainer">
+
+
+    <div class="col-md-12">
+
+      <div class="resume-title">
+        <div>
+          <%if @job.intern == true%>
+              <span class="btn btn-default">此職缺為實習</span>
+          <%end%>
+        </div>
+        <h4>請確認您所填寫的內容，當您按下"確認投遞"按鈕後，您的履歷將會寄送到『<%=@company.brand%>』徵才信箱 <%=link_to "確定投遞", apply_company_job_path(@company, @job), :method=>:post, :class=>"btn btn-success"%></h4>
+        <div>
+          <i class="fa fa-quote-right pull-left line-quote"></i>
+          <div class="line pull-right"></div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="col-md-7 resume-left">
+    <div class="col-md-12">
+      <h4>以下為您所填寫的資料，若要修正，請點選右上角 <span class="glyphicon glyphicon-file"></span></h4><br>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("name")%></h3>
+          </div>
+
+          <div class="panel-body">
+              <%=@user.name%>
+          </div>
+        </div>
+
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("email")%></h3>
+          </div>
+          <div class="panel-body">
+              <%=@user.email%>
+          </div>
+        </div>
+
+        <div class="<%=sex_class(@user)%>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("sex")%></h3>
+          </div>
+          <div class="panel-body">
+            <%if @user.sex.present?%>
+              <%=t(@user.sex)%>
+            <%else%>
+              <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+            <%end%>
+          </div>
+        </div>
+
+        <div class="<%=phone_class(@user)%>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("phone")%>(方便公司聯絡您)</h3>
+          </div>
+          <div class="panel-body">
+            <%if @user.phone.present?%>
+              <%=@user.phone%>
+            <%else%>
+              <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+            <%end%>
+          </div>
+        </div>
+
+        <div class="<%=birthday_class(@user)%>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("birthday")%></h3>
+          </div>
+          <div class="panel-body">
+            <%if @user.birthday.present?%>
+              <%=@user.birthday%>
+            <%else%>
+              <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+            <%end%>
+          </div>
+        </div>
+
+        <div class="<%=summary_class(@user)%>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("summary")%></h3>
+          </div>
+          <div class="panel-body">
+            <%if @user.summary.present?%>
+              <%=simple_format @user.summary%>
+            <%else%>
+              <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+            <%end%>
+          </div>
+        </div>
+
+        <div class="<%=experiences_class(@user)%>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("experience")%></h3>
+          </div>
+          <div class="panel-body">
+            <%if @user.experiences.present?%>
+              <%@user.experiences.each do |e|%>
+              <%=e.company%> / <%=e.office%><span class="pull-right"><%=e.date_begin.strftime("%Y/%m")%> - <%=e.date_end.strftime("%Y/%m")%></span>
+              <%=simple_format e.content%>
+               <div class="clearfix"></div>
+              <%end%>
+            <%else%>
+              <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+            <%end%>
+          </div>
+        </div>
+
+        <div class="<%=skills_class(@user)%>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("skill")%></h3>
+          </div>
+          <div class="panel-body">
+            <%if @user.skills.present?%>
+              <%@user.skills.each do |s|%>
+               <%=s.name%>
+               <%=simple_format s.content%>
+              <%end%>
+            <%else%>
+              <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+            <%end%>
+          </div>
+        </div>
+
+        <div class="<%=educations_class(@user)%>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("education")%></h3>
+          </div>
+          <div class="panel-body">
+            <%if @user.educations.present?%>
+              <%@user.educations.each do |e|%>
+              <%=e.school%> / <%=e.department%> <span class="pull-right"><%=e.date_begin.strftime("%Y/%m")%> - <%=e.date_end.strftime("%Y/%m")%></span>
+               <div class="clearfix"></div>
+              <%end%>
+            <%else%>
+              <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+            <%end%>
+          </div>
+        </div>
+
+        <div class="<%=languages_class(@user)%>">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%=t("languages")%></h3>
+          </div>
+          <div class="panel-body">
+            <%if @user.languages.present?%>
+              <%@user.languages.each do |l|%>
+                <p>
+                  <%=l.name%> / <%=t(l.degree, :scope => "language.degree")%>
+                </p>
+              <%end%>
+            <%else%>
+              <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+            <%end%>
+          </div>
+        </div>
+
+          <div class="<%=collections_class(@user)%>">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%=t("collection")%></h3>
+            </div>
+            <div class="panel-body">
+                <%if @user.collections.present?%>
+                  <%@user.collections.each do |c|%>
+                    <p>
+                      <%=link_to c.url, url_for(c.url), :target=>"_blank"%>
+                    </p>
+                    <p>
+                      <%=simple_format c.content%>
+                    </p>
+                    <%end%>
+                <%else%>
+                  <span class="glyphicon glyphicon-exclamation-sign resume-not">尚未填寫</span>
+                <%end%>
+            </div>
+          </div>
+
+
+        <h5><%="個人化" + t("resume")%></h5>
+          <%if @user.resume.present?%>
+            <%= link_to @user.resume.url, :target=>"_blank", :class=>"list-group-item personal-resume" do%>
+              <span class="glyphicon glyphicon-check"></span>
+              已上傳履歷
+            <%end%>
+            <br>
+          <%else%>
+              未上傳履歷表
+          <%end%>
+    </div>
+  </div>
+
+
+  <div class="col-md-5 resume-right">
+    <div class="col-md-12">
+      <h4>投遞職缺為 『<%=@company.brand%>』 的 『<%=@job.name%>』</h4><br>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">公司地址</h3>
+        </div>
+        <div class="panel-body">
+          <%=@company.area.name%> <%=@company.address%>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">工作內容</h3>
+        </div>
+        <div class="panel-body">
+          <%=simple_format @job.content%>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">條件要求</h3>
+        </div>
+        <div class="panel-body">
+          <%=simple_format @job.skill%>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">薪資範圍</h3>
+        </div>
+        <div class="panel-body">
+        <%if @job.year_salary_floor.present?%>
+          NT$<%= number_with_delimiter(@job.year_salary_floor)%> - NT$<%=number_with_delimiter(@job.year_salary_ceiling)%>（年薪）
+        <%elsif @job.salary_floor.present?%>
+         NT$<%= number_with_delimiter(@job.salary_floor)%> - NT$<%=number_with_delimiter(@job.salary_ceiling)%>
+        <%else%>
+        面議
+        <%end%>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">公司福利</h3>
+        </div>
+        <div class="panel-body">
+          <%=simple_format @job.company.welfare%>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">刊登日期</h3>
+        </div>
+        <div class="panel-body">
+          <%=@job.published_on%>
+        </div>
+      </div>
+
+      <p>標籤:
+        <%@job.tags.each do |t|%>
+          <span class="show-tag">
+            <%=link_to companies_path do%>
+            <span>
+              #<%=t.name%>
+            </span>
+            <%end%>
+          </span>
+        <%end%>
+      </p>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+machine:
+  timezone:
+    Asia/Taipei
+  ruby:
+    version: 2.1.2
+dependencies:
+  pre:
+    - rvm use 2.1.2
+    - gem install bundler
+  post:
+    - gem update rake
+database:
+  override:
+    - cp config/database.yml.example config/database.yml
+    - cp config/fb.yml.example config/fb.yml
+    - cp config/rollbar.yml.example config/rollbar.yml
+    - cp config/s3.yml.example config/s3.yml
+    - cp config/email.yml.example config/email.yml
+    - rake db:create db:migrate --trace
+test:
+  override:
+    - bundle exec rspec --color

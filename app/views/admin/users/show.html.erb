@@ -1,0 +1,23 @@
+<div class="row">
+  <%= render :partial => "admin/companies/sidebar"%>
+  <div class="col-md-10">
+    <div class=" right">
+      <%=link_to admin_users_path, :class=>"btn btn-default" do%>
+      <span class="glyphicon glyphicon-arrow-left"></span>
+      <%end%>
+    </div>
+
+    <h3>投遞履歷</h3>
+    <table class="table table-bordered table-hover">
+     <%@user.job_applies.each do |l|%>
+        <tr>
+          <td><%=l.company.brand%></td>
+          <td><%=l.name%></td>
+        </tr>
+      <%end%>
+    </table>
+
+    <%= render :partial => "users/resume_page", :locals => { :user => @user }%>
+
+  </div>
+</div>

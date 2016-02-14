@@ -1,0 +1,55 @@
+<div class="row">
+  <%= render :partial => "admin/companies/sidebar"%>
+  <div class="col-md-10">
+
+    <div class="right">
+      <ol class="breadcrumb">
+        <%=link_to  admin_companies_path do%>
+        <%=@company.brand%>
+        <%end%>
+        <li>/member一覽</li>
+      </ol>
+      <!-- back -->
+      <%=link_to admin_companies_path, :class=>"btn btn-default" do%>
+      <span class="glyphicon glyphicon-arrow-left"></span>
+      <%end%>
+      <!-- new -->
+      <%=link_to new_admin_company_member_path, :class=>"btn btn-default" do%>
+      <span class="glyphicon glyphicon-plus"></span>
+      <%end%>
+    </div>
+
+
+  <br>
+
+    <table class="table table-striped">
+      <tr>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>職位</th>
+        <th>關於我</th>
+        <th  style="text-align:center">管理者編輯</th>
+      </tr>
+      <%@members.each do |m|%>
+        <tr>
+          <td><%=m.id%></td>
+          <td><%=m.name%></td>
+          <td><%=m.office%></td>
+          <td><%=m.about%></td>
+          <td style="text-align:center">
+            <%=link_to admin_company_member_path(@company,m), :class => "btn btn-default" do%>
+              <span class="glyphicon glyphicon-eye-open"></span>
+            <%end%>
+            <%=link_to edit_admin_company_member_path(@company,m), :class => "btn btn-default" do%>
+              <span class="glyphicon glyphicon-edit"></span>
+            <%end%>
+            <%=link_to admin_company_member_path(@company,m), :method => :delete, :class=>"btn btn-default",data: { confirm: "不～～～" } do%>
+              <span class="glyphicon glyphicon-trash"></span>
+            <%end%>
+          </td>
+
+        </tr>
+      <%end%>
+    </table>
+  </div>
+</div>

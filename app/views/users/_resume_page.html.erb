@@ -1,0 +1,188 @@
+<div class="col-md-12">
+  <div class="resume-title">
+    <h3><%=user.name%>的履歷表</h3>
+  </div>
+</div>
+
+
+<div class="col-md-offset-1 col-md-10 view-resume">
+
+    <div class="col-md-9">
+        <div class="col-md-12 view-resume-title">
+        <h5>基本資料</h5>
+        </div>
+
+        <div class="col-md-12">
+          <h3><%=user.name%></h3>
+          <%if user.sex.present?%>
+            /<%=t(user.sex)%>
+          <%end%>
+        </div>
+
+        <div class="col-md-4">
+          <br>
+            <p><span><%=t("phone")%></span>：<%=user.phone%></p>
+            <p><span><%=t("birthday")%></span>：<%=user.birthday%></p>
+        </div>
+
+        <div class="col-md-8">
+        <br>
+            <p><span><%=t("email")%></span>：<%=user.email%></p>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="pull-right">
+      <%if user.photo.present?%>
+      <%=image_tag user.photo, alt: user.name,:class=>"photo"%>
+      <%elsif%>
+      <%=image_tag user.fb_image+"?type=large", alt: user.name,:class=>"fb_image"%>
+      <%else%>
+      <%end%>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+
+  <div class="col-md-12">
+
+    <%if user.summary.present?%>
+    <div class="col-md-12 view-resume-title">
+        <h5><%=t("summary")%></h5>
+    </div>
+    <div class="col-md-12 view-resume-detail">
+
+      <%=simple_format user.summary%>
+    </div>
+    <%end%>
+
+    <br>
+
+    <%if user.experiences.present?%>
+
+      <div class="col-md-12 view-resume-title">
+          <h5><%=t("experience")%></h5>
+      </div>
+
+      <div class="col-md-12 view-resume-detail">
+
+        <%user.experiences.order("id DESC").each do |e|%>
+          <i class="glyphicon glyphicon-map-marker"></i>
+          <span class="view-resume-company-name"><strong><%=e.company%></strong></span> / <%=e.office%>
+          <span class="pull-right">
+          <%=e.date_begin.strftime("%Y/%m")%> - <%=e.date_end.strftime("%Y/%m")%>
+          </span>
+          <div class="clearfix"></div>
+          <div class="view-resume-content">
+            <br>
+            <%=simple_format e.content%>
+          </div>
+          <%if e != user.experiences.last%>
+          <hr>
+          <%end%>
+        <%end%>
+      </div>
+    <%end%>
+
+    <%if user.skills.present?%>
+      <div class="col-md-12" style="padding-left:0px">
+        <div class="col-md-12 view-resume-title">
+          <h5><%=t("skill")%></h5>
+        </div>
+        <div class="col-md-12 view-resume-detail">
+        <%user.skills.order("id DESC").each do |s|%>
+          <i class="glyphicon glyphicon-map-marker"></i>
+            <span class="view-resume-company-name">
+              <strong><%=s.name%></strong>
+            </span>
+            <div class="view-resume-content">
+              <br>
+              <%=simple_format s.content%>
+            </div>
+            <%if s != user.skills.last%>
+            <hr>
+            <%end%>
+        <%end%>
+        </div>
+      </div>
+    <%end%>
+
+    <%if user.collections.present?%>
+      <div class="col-md-12"  style="padding-left:0px">
+        <div class="col-md-12 view-resume-title">
+            <h5><%=t("collection")%></h5>
+        </div>
+        <div class="col-md-12 view-resume-detail">
+          <%user.collections.order("id DESC").each do |c|%>
+            <i class="glyphicon glyphicon-map-marker"></i>
+            <strong class="view-resume-company-name">
+            <%=link_to c.url, url_for(c.url), :target=>"_blank"%>
+            </strong>
+            <div class="view-resume-content">
+            <br>
+            <%=simple_format c.content%>
+            </div>
+            <%if c != user.collections.last%>
+            <hr>
+            <%end%>
+          <%end%>
+        </div>
+      </div>
+     <%end%>
+
+
+    <%if user.educations.present?%>
+
+    <div class="col-md-7" style="padding-left:0px">
+      <div class="col-md-12 view-resume-title">
+        <h5><%=t("education")%></h5>
+      </div>
+
+      <div class="col-md-12 view-resume-detail">
+
+        <%user.educations.order("id DESC").each do |e|%>
+          <p><i class="glyphicon glyphicon-chevron-right"></i>
+          <%=e.school%> / <%=e.department%>
+          <span class="pull-right">
+            <%=e.date_begin.strftime("%Y/%m")%> - <%=e.date_end.strftime("%Y/%m")%>
+          </span>
+          </p>
+           <div class="clearfix"></div>
+        <%end%>
+      </div>
+    </div>
+
+     <%end%>
+
+     <%if user.languages.present?%>
+      <div class="col-md-5" style="padding-right:0px">
+        <div class="col-md-12 view-resume-title">
+          <h5><%=t("languages")%></h5>
+        </div>
+
+        <div class="col-md-12 view-resume-detail">
+
+          <%user.languages.each do |l|%>
+            <p>
+              <i class="glyphicon glyphicon-chevron-right"></i>
+              <%=l.name%>
+              <span class="pull-right">
+              <%=t(l.degree, :scope=>"language.degree")%>
+              </span>
+            </p>
+             <div class="clearfix"></div>
+          <%end%>
+        </div>
+      </div>
+    <%end%>
+
+    <%if user.resume.present?%>
+      <div class="col-md-12">
+        <%= link_to user.resume.url, :target=>"_blank", :class=>"list-group-item personal-resume" do%>
+          <span class="glyphicon glyphicon-check"></span>
+          個人化履歷表
+          <%end%>
+      </div>
+    <%end%>
+
+  </div>

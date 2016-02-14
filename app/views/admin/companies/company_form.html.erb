@@ -1,0 +1,36 @@
+<div class="row">
+  <%= render :partial => "sidebar"%>
+  <div class="col-md-10">
+    <div class="col-md-5">
+      <div class="left">
+        <h1>公司諮詢表單</h1>
+      </div>
+    </div>
+    <div class="col-md-7 padding_r">
+    </div>
+
+  <br>
+
+    <table class="table table-striped">
+      <tr>
+        <th>ID</th>
+        <th>公司名稱</th>
+        <th>信箱</th>
+        <th>聯絡電話</th>
+        <th>產業類別</th>
+        <th>內容</th>
+      </tr>
+      <%@company_forms.each do |c|%>
+        <tr>
+          <td><%=c.id%></td>
+          <td><%=c.name%></td>
+          <td><%=c.email%></td>
+          <td><%=c.phone%></td>
+          <td><%=c.category%></td>
+          <td><%=c.content%></td>
+        </tr>
+      <%end%>
+    </table>
+
+  </div>
+</div>

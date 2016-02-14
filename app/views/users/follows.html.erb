@@ -1,0 +1,69 @@
+<div class="container">
+    <div class=" col-sm-offset-1 col-sm-3">
+      <%= render :partial => "users/sidebar"%>
+    </div>
+
+    <div class="col-sm-7 account">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">公司</div>
+
+            <div class="panel-body">
+              <%if @user.follow_companies.present?%>
+                <%@user.follow_companies.each do |c|%>
+                <li><%=link_to c.brand, company_path(c), :class=>"list-group-item"%></li>
+                <%end%>
+              <%else%>
+                尚未收藏公司，立即點選<%=link_to "所有公司", companies_path%>將有興趣的公司加入收藏
+              <%end%>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading">職缺</div>
+            <div class="panel-body">
+              <%if @user.follow_jobs.present?%>
+                <%@user.follow_jobs.each do |j|%>
+                  <%if j.status=="career_begin"%>
+                    <li><%=link_to company_job_path(j.company,j), :class=>"list-group-item user_frame" do%>
+                      <%=j.name%><span class="pull-right"><%=j.company.brand%> <%=j.published_on%></span>
+                      <div class="clearfix"></div>
+                      <%end%>
+                    </li>
+                  <%else%>
+                    <li><%=link_to company_job_path(j.company,j), :class=>"list-group-item user_frame" do%>
+                      <%=j.name%><span class="pull-right">此職缺目前停止應徵中，若有需求會再開放</span>
+                      <div class="clearfix"></div>
+                      <%end%>
+                    </li>
+                  <%end%>
+                <%end%>
+              <%else%>
+                尚未收藏職缺，立即點選<%=link_to "所有職缺", jobs_path%>將有興趣的職缺加入收藏
+              <%end%>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">文章</div>
+            <div class="panel-body">
+              <%if @user.follow_articles.present?%>
+                <%@user.follow_articles.each do |a|%>
+                    <li><%=link_to article_path(a), :class=>"list-group-item user_frame" do%>
+                      <%=a.title%>
+                      <span class="pull-right">
+                        <%=a.published_on%>
+                      </span>
+                      <%end%>
+                    </li>
+                <%end%>
+              <%else%>
+                尚未收藏文章，立即點選<%=link_to "專欄", articles_path%>將有興趣的文章加入收藏
+              <%end%>
+            </div>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,93 @@
+<div class="row">
+  <%= render :partial => "admin/companies/sidebar"%>
+  <div class="col-md-10">
+    <div class="col-md-6">
+      <div class="left">
+        <h1>職缺一覽 <%=@jobs.size%></h1>
+      </div>
+    </div>
+    <div class="col-md-6 padding_r">
+      <div class=" right">
+        <%=link_to "徵才中",admin_all_job_path(:status=>"career_begin"), :class => "btn btn-default"%>
+        <%=link_to "徵才結束",admin_all_job_path(:status=>"career_end"), :class => "btn btn-default"%>
+        <!-- categories -->
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Categories
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <%@categories.each do |c|%>
+                <li><%=link_to admin_all_job_path(:tag=>c) do%>
+                  <%=c.name%>
+                  <span class="badge"><%=c.jobs_count%></span>
+                  <%end%>
+                </li>
+              <%end%>
+          </ul>
+        </div>
+        <!-- tags -->
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Tags
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <%@tags.each do |t|%>
+                <li><%=link_to admin_all_job_path(:tag=>t) do%>
+                  <%=t.name%>
+                  <span class="badge"><%=t.jobs_count%></span>
+                  <%end%>
+                </li>
+              <%end%>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+  <br>
+
+
+    <table class="table table-striped">
+      <tr>
+        <th>ID</th>
+        <th>公司</th>
+        <th>職缺名稱</th>
+        <th>類別</th>
+        <th>實習</th>
+        <th>職缺狀態</th>
+        <th><%=link_to admin_all_job_path(:published=>"DESC") do%>
+         刊登時間
+        <i class="glyphicon glyphicon-sort-by-order-alt"></i>
+        <%end%>
+        </th>
+        <th>View</th>
+        <th  style="text-align:center">瀏覽</th>
+      </tr>
+
+      <%@jobs.each do |j|%>
+        <tr class="<%=job_status_class(j)%>">
+          <td><%=j.id%></td>
+          <td>
+            <%=j.company.brand%>
+          </td>
+          <td><%=j.name%></td>
+          <td><%=j.job_category.name%></td>
+          <td><%=j.intern == true ? "Yes" : "No"%></td>
+          <td><%=t(j.status, :scope => "job.status")%></td>
+          <td><%=j.published_on%></td>
+          <td><%=j.views_count%></td>
+          <td  style="text-align:center">
+            <%=link_to admin_company_path(j.company), :class => "btn btn-default" do%>
+              公司
+            <%end%>
+            <%=link_to admin_company_job_path(j.company,j), :class => "btn btn-default" do%>
+              職缺
+            <%end%>
+          </td>
+        </tr>
+    <%end%>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,168 @@
+<div class="container">
+    <div class=" col-sm-offset-1 col-sm-3">
+      <%= render :partial => "users/sidebar"%>
+    </div>
+
+   <div class="col-sm-7 resume">
+    <%if flash[:notice].present?%>
+      <div class="alert alert-success text-center" role="alert"><%= flash[:notice] %></div>
+    <%end%>
+    <%if flash[:alert].present?%>
+    <div class="alert alert-danger text-center" role="alert"><%= flash[:alert] %></div>
+    <%end%>
+
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <%end%>
+
+    <%if @user.resume.present?%>
+      <%= link_to @user.resume.url, :target=>"_blank", :class=>"list-group-item personal-resume" do%>
+        <span class="glyphicon glyphicon-check"></span>
+        已上傳履歷
+      <%end%>
+      <p class="glyphicon glyphicon-exclamation-sign">如要更新履歷，直接覆蓋即可</p>
+    <%end%>
+
+    <%=form_for setup_resume(@user), :url => user_path(@user) do |u|%>
+
+    <div class="form-group">
+      <h5><%= u.label :resume, "個人化"+t("resume")%></h5>
+      <%= u.file_field :resume, :class => "form-control"%>
+      <p class="glyphicon glyphicon-exclamation-sign">檔案請上傳pdf(大小限制5M)</p>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <h5><%= u.label :summary, t("summary")%></h5>
+      <%= u.text_area :summary, :class => "form-control", :rows=>"8"%>
+      <p class="glyphicon glyphicon-exclamation-sign">請撰寫300字以內個人簡歷，讓徵才企業更加了解您。</p>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <h5><%= t("experience")%></h5>
+      <%= u.nested_fields_for :experiences do |e| %>
+      <div class="form-group">
+        <div class="row">
+        <div class="col-md-6">
+        <%= e.label :company, t("company")%>
+        <%= e.text_field :company, :class => "form-control"%>
+        </div>
+        <div class="col-md-6">
+        <%= e.label :office, t("office")%>
+        <%= e.text_field :office, :class => "form-control"%>
+        </div>
+        </div>
+        <%= e.label :content, t("content")%>
+        <%= e.text_area :content, :class => "form-control", :rows=>"3"%>
+        <%= e.label :date_begin, t("date_begin")%>
+        <%= e.date_select :date_begin, start_year: 1900, end_year: 2020, include_blank: true%>
+        <%= e.label :date_end, t("date_end")%>
+        <%= e.date_select :date_end, start_year: 1900, end_year: 2020, include_blank: true%>
+        <%= e.remove_nested_fields_link t("remove")%>
+      </div>
+        <% end %>
+       <%=u.add_nested_fields_link :experiences, "新增工作經歷", :class => "btn btn-danger btn-xs"%>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <h5><%= t("skill")%></h5>
+      <%= u.nested_fields_for :skills do |e| %>
+      <div class="form-group">
+        <%= e.label :name, "技能"+t("name")%>
+        <%= e.text_field :name, :class => "form-control"%>
+        <%= e.label :content, t("content")%>
+        <%= e.text_area :content, :class => "form-control", :rows=>"3"%>
+        <%= e.remove_nested_fields_link t("remove")%>
+      </div>
+        <% end %>
+       <%=u.add_nested_fields_link :skills, "新增專業技能", :class => "btn btn-danger btn-xs"%>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <h5><%= t("education")%></h5>
+      <%= u.nested_fields_for :educations do |e| %>
+      <div class="form-group">
+        <div class="row">
+        <div class="col-md-6">
+        <%= e.label :school, t("school")%>
+        <%= e.text_field :school, :class => "form-control"%>
+        </div>
+        <div class="col-md-6">
+        <%= e.label :department, t("department")%>
+        <%= e.text_field :department, :class => "form-control"%>
+        </div>
+        </div>
+        <%= e.label :date_begin, t("date_begin")%>
+        <%= e.date_select :date_begin, start_year: 1900, end_year: 2020, include_blank: true%>
+        <%= e.label :date_end, t("date_end")%>
+        <%= e.date_select :date_end, start_year: 1900, end_year: 2020, include_blank: true%>
+        <%= e.remove_nested_fields_link t("remove")%>
+      </div>
+        <% end %>
+       <%=u.add_nested_fields_link :educations, '新增學歷', :class => "btn btn-danger btn-xs"%>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <h5><%= t("languages")%></h5>
+      <%= u.nested_fields_for :languages do |l| %>
+      <div class="form-group">
+        <div class="row">
+        <div class="col-md-6">
+        <%= l.label :name, "語言"+t("name")%>
+        <%= l.text_field :name, :class => "form-control"%>
+        </div>
+        <div class="col-md-6">
+        <%= l.label :degree, "流利程度"%>
+        <%= l.select :degree, language_degrees_options , { :include_blank => t(:select_prompt) }, :class => "form-control"  %>
+        </div>
+        </div>
+        <%= l.remove_nested_fields_link t("remove")%>
+      </div>
+        <% end %>
+       <%=u.add_nested_fields_link :languages, "新增專業技能", :class => "btn btn-danger btn-xs"%>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <h5><%= t("collection") %></h5>
+      <%= u.nested_fields_for :collections do |c| %>
+      <div class="form-group">
+        網址
+        <%= c.url_field :url, :class => "form-control"%>
+        描述
+        <%= c.text_area :content, :class => "form-control"%>
+        <%= c.remove_nested_fields_link t("remove")%>
+        <p class="glyphicon glyphicon-exclamation-sign">作品集網址http://</p>
+      </div>
+        <% end %>
+       <%=u.add_nested_fields_link :collections, '新增作品網址', :class => "btn btn-danger btn-xs"%>
+        <p>
+          <i class="glyphicon glyphicon-exclamation-sign"></i>
+          您可以分享部落格、粉絲專頁、youtube頻道、github..讓徵才企業更加認識
+        </p>
+    </div>
+
+    <div class="form-group">
+    <%= u.submit t("update"), :class => "btn btn-success"%>
+    </div>
+    <%end%>
+  </div>
+</div>
+
+

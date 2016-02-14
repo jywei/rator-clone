@@ -1,0 +1,14 @@
+
+<%= render :partial => "admin/companies/sidebar"%>
+<div class="col-md-10">
+  <div class=" right">
+    <%=link_to admin_company_jobs_path, :class=>"btn btn-default" do%>
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    <%end%>
+  </div>
+  <%=form_for @job, :url => admin_company_jobs_path(@company) do |j|%>
+    <%=render :partial => "form", :locals => {:j =>j}%>
+  <%end%>
+</div>
+<br>
+<br>

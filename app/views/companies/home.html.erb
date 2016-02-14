@@ -1,0 +1,136 @@
+
+<div class="container-fluid">
+  <div class="banner">
+    <%@home_companies.each do |c|%>
+        <div class="banner-wrapper">
+          <div class="banner-image">
+          <%if c.banners.first.present?%>
+            <%=link_to image_tag(c.banners.first.banner(:home), alt: "#{c.banners.first.banner_alt}"), company_path(c), :class=>"hvr-grow"%>
+          <%end%>
+          </div>
+          <div class="banner-bottom">
+            <h2>
+            <%=c.brand%>
+            </h2>
+            <div class="pull-right">
+              <%if c.logo.present?%>
+                <%=image_tag(c.logo.url(:thumb), alt:"#{c.logo_alt}", size:"44x44")%>
+              <%end%>
+            </div>
+
+            <span class="banner-center"><%=c.about%></span>
+            <span class="pull-right">
+            <%c.tags.each do |t|%>
+            #<%=link_to t.name, companies_path(:tag=>t)%>
+            <%end%>
+            <span class="glyphicon glyphicon-eye-open"></span>
+             <%=c.views_count%>
+            </span>
+          </div>
+        </div>
+    <%end%>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="col-md-12 word">
+    <%if @advert.first.present?%>
+    <h3><%=@advert.first.content%></h3>
+    <%end%>
+  </div>
+</div>
+
+<div class="container">
+
+    <div class="col-xs-12 col-sm-6 col-md-6 bg-image">
+      <div class="col-md-12 advert-left">
+        <%if @advert.second.present?%>
+          <%@advert.second.advert_banners.each do |b|%>
+            <%=link_to image_tag(b.banner.url(:medium), alt:b.banner_alt), b.banner_url, :target=>b.target, :class=>"hvr-grow"%>
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 bg-image">
+      <div class="col-md-12 advert-right">
+        <%if @advert.third.present?%>
+          <%@advert.last.advert_banners.each do |b|%>
+            <%=link_to image_tag(b.banner.url(:medium), alt:b.banner_alt), b.banner_url, :target=>b.target, :class=>"hvr-grow"%>
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="container">
+    <div class="col-md-12">
+      <div>
+      <h4>職場專欄</h4>
+        <div>
+          <i class="fa fa-quote-right pull-left line-quote"></i>
+          <div class="line pull-right"></div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+  <div class="container contain-home">
+    <%@home_articles.each do |a|%>
+        <div class="col-md-6">
+          <%=link_to article_path(a) do%>
+              <div class="home-frame-top col-md-12 ">
+              <%=image_tag(a.banner.url(:medium), alt:"#{a.banner_alt}", :class=>"hvr-grow")%>
+              </div>
+              <div class="frame-bottom col-md-12">
+                <div class="content-top">
+                  <h4><%=a.title%></h4>
+                </div>
+                <div class="content-center">
+                  <%=a.description%>
+                </div>
+                <div class="content-bottom">
+                  <p>分類:<%=a.article_category.name%></p>
+
+                  <p>
+                    標籤:<%a.article_tags.each do |t|%>
+                      <span>#<%=t.name%></span>
+                    <%end%>
+                    <span class="pull-right">
+                    <span class="fb-share-button" data-href="<%=article_url(a)%>" data-layout="button_count"></span>
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                    <%=a.views_count%>
+                    </span>
+                  </p>
+                </div>
+              </div>
+          <%end%>
+        </div>
+        <%end%>
+  </div>
+
+  <div class="container">
+    <div class="col-md-12 text-center">
+      <%=link_to "Read More", articles_path, :class=>"btn btn-primary"%>
+    </div>
+  </div>
+
+
+<script>
+$('.banner').slick({
+  dots: true,
+  infinite: true,
+  speed: 300,
+  slidesToShow: 1,
+  centerMode: true,
+  variableWidth: true,
+  autoplay: true,
+  autoplaySpeed: 3000,
+  arrows: false,
+});
+</script>

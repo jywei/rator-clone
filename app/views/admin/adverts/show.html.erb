@@ -1,0 +1,49 @@
+<div class="row">
+  <%= render :partial => "admin/companies/sidebar"%>
+  <div class="col-md-10">
+    <div class=" right">
+      <%=link_to edit_admin_advert_path(@advert), :class => "btn btn-default" do%>
+              <span class="glyphicon glyphicon-edit"></span>
+      <%end%>
+      <%=link_to admin_adverts_path, :class=>"btn btn-default" do%>
+      <span class="glyphicon glyphicon-arrow-left"></span>
+      <%end%>
+    </div>
+
+    <br>
+
+    <table class="table table-striped">
+
+      <tr>
+        <th>名稱:</th>
+        <td><%=@advert.name%></td>
+      </tr>
+
+      <tr>
+        <th>內容:</th>
+        <td><%=@advert.content%></td>
+      </tr>
+
+      <tr>
+        <th>時間:</th>
+        <td><%=@advert.date%></td>
+      </tr>
+
+      <tr>
+        <th>Banner:</th>
+        <td>
+          <%if @advert.advert_banners.present?%>
+            <%@advert.advert_banners.each do |a|%>
+              <div>
+                <%=link_to image_tag(a.banner.url(:medium)),  a.banner.url, :target=>"_blank"%>
+                <%=a.banner_alt%>
+              </div>
+              <br>
+            <%end%>
+          <%end%>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+</div>

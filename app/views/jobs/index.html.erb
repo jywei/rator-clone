@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="container">
+    <div class=" col-md-2 com_sidebar">
+      <div>
+          <%= form_tag jobs_path, :method => :get do %>
+            <%= text_field_tag "keyword", nil, placeholder: '請輸入關鍵字...', :class=>"form-control"%>
+            <%= submit_tag "Search", :class => "btn btn-default btn-sm", :style=>"width:100%; margin:5px 0" %>
+          <% end %>
+      </div>
+      <div class="list-group">
+
+      <%=link_to jobs_path, :class=>"list-group-item", :style=>"text-align:center" do%>
+        全部職缺
+      <%end%>
+
+      <%=link_to jobs_path(:intern=>"all"), :class=>"list-group-item #{is_intern_active?("all")}", :style=>"text-align:center" do%>
+        實習職缺
+      <%end%>
+      </div>
+      <br>
+      <div class="sidebar">
+        <p>分類</p>
+      </div>
+      <ul class="list-group">
+        <%@job_categories.each do |c| %>
+          <%if c.jobs.present?%>
+            <%=link_to jobs_path(:category=>c, :intern=>params[:intern]), :class=>"list-group-item #{is_category_active?(c)}" do%>
+            <%=c.name%>
+            <span class="badge">
+              <%=c.job_filter_by_intern(params[:intern])%>
+            </span>
+            <%end%>
+          <%end%>
+        <%end%>
+      </ul>
+      <div class="sidebar">
+        <p>標籤</p>
+      </div>
+
+      <%@job_tags.each do |t|%>
+        <% tag_count = t.tag_job_count%>
+        <%if t.jobs.present? && tag_count!= 0%>
+          <%=link_to jobs_path(:tag=>t), :class => "btn btn-primary btn-xs" do%>
+          <%=t.name%>
+          <span class="badge">
+            <%=tag_count%>
+          </span>
+          <%end%>
+        <%end%>
+      <%end%>
+    </div>
+
+    <div class="col-md-10">
+        <%@jobs.each do |j|%>
+            <div class="row job">
+              <div class="col-md-4 job-photo">
+              <%if j.company.banners.first.present?%>
+                <%=link_to image_tag(j.company.banners.first.banner.url(:medium), alt: j.company.banners.first.banner_alt), company_job_path(j.company,j), :"data-no-turbolink" => true, :class=>"hvr-grow"%>
+              <%end%>
+              </div>
+              <div class="col-xs-12 col-md-8 job-content">
+                  <span class="col-xs-7 col-md-9 job-name">
+                    <%=link_to j.name, company_job_path(j.company,j), :"data-no-turbolink" => true%>
+                    <%if j.intern == true%>
+                    <span class="btn btn-danger btn-xs">實習</span>
+                    <%end%>
+                  </span>
+
+
+                  <span class="col-xs-5 col-md-3 job-date glyphicon glyphicon-time"><%=j.published_on%></span>
+
+                  <span class="col-xs-12 col-md-12 job-company">
+
+                  <%=image_tag(j.company.logo(:thumb), :size=>"25x25", alt: j.company.logo_alt)%>
+                  <span class="job-company-name">
+                    <%=link_to j.company.brand, company_path(j.company)%>
+                  </span>
+                  <span class="job-area"> [<%=j.company.area.name%>]</span>
+                  </span>
+
+                  <div class="col-xs-12 col-md-12 job-range">
+                  <%if j.year_salary_floor.present?%>
+                  薪資範圍:NT$<%= number_with_delimiter(j.year_salary_floor)%> - NT$<%=number_with_delimiter(j.year_salary_ceiling)%>（年薪）
+                  <%elsif j.salary_floor.present?%>
+                  薪資範圍:NT$<%= number_with_delimiter(j.salary_floor)%> - NT$<%=number_with_delimiter(j.salary_ceiling)%>
+                  <%else%>
+                    薪資面議
+                  <%end%>
+                  </div>
+                  <div class="col-xs-12 col-md-12 show-job">
+
+                    <%j.tags.each do |t|%>
+                      <span class="show-tag">
+                        <%=link_to jobs_path(:tag=>t) do%>
+                          <span>#<%=t.name%></span>
+                        <%end%>
+                      </span>
+                    <%end%>
+                    <span class="pull-right">
+                      <i class=" glyphicon glyphicon-eye-open"></i>
+                      <%=j.views_count%>
+                    </span>
+                  </div>
+              </div>
+            </div>
+        <%end%>
+        <%= paginate @jobs, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-sm"%>
+    </div>
+  </div>
+</div>
+

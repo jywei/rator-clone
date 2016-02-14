@@ -1,0 +1,83 @@
+<div class="job-company-about">
+
+    <h3>公司基本資料</h3>
+
+    <p>名稱: <%=company.name%></p>
+    <p>地區: <%=company.area.name%></p>
+    <p>地址: <%=company.address%></p>
+
+    <%if company.scale.present?%>
+    <p>公司規模: <%=company.scale%>人</p>
+    <%end%>
+
+    <%if company.capital.present?%>
+    <p>資本額: <%=company.capital%>萬</p>
+    <%end%>
+
+      <%if company.fb.present?%>
+        <span>
+          <%=link_to company.fb, :target=>"_blank", :class=>"btn btn-default fb company-link" do%>
+            <i class="fa fa-facebook-square"></i>
+            Facebook 專頁
+          <%end%>
+        </span>
+      <%end%>
+
+      <%if company.web.present?%>
+        <span>
+          <%=link_to company.web, :target=>"_blank", :class=>"btn btn-default web company-link" do%>
+            <i class="fa fa-home"></i>
+            官方網站
+          <%end%>
+        </span>
+      <%end%>
+
+
+    <%if company.ios.present?%>
+        <span>
+          <%=link_to company.ios, :target=>"_blank", :class=>"btn btn-default ios company-link" do%>
+            <i class="fa fa-apple"></i>
+            App Store
+          <%end%>
+        </span>
+    <%end%>
+
+    <%if company.android.present?%>
+      <span>
+        <%=link_to company.android, :target=>"_blank", :class=>"btn btn-default android company-link" do%>
+          <i class="fa fa-android"></i>
+          Android
+        <%end%>
+      </span>
+    <%end%>
+
+    <%if company.longitude.present?%>
+        <h3>Google map</h3>
+        <div class="iframe-rwd" id="map">
+        </div>
+      <%end%>
+
+    <%if company.video.present?%>
+      <h3>相關影片</h3>
+        <div class="iframe-rwd">
+          <iframe src="https://www.youtube.com/embed/<%=company.video%>?hd=0&amp;autoplay=0&amp;loop=1&amp;playlist=<%=company.video%>" allowfullscreen></iframe>
+        </div>
+        (點兩下可放大全螢幕觀看)
+    <%end%>
+
+</div>
+
+
+<script src="//maps.google.com/maps/api/js?v=3.13&amp;sensor=false&amp;libraries=geometry" type="text/javascript"></script>
+<script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script>
+
+<script type="text/javascript">
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers(<%=raw @hash.to_json %>);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+
+  handler.getMap().setZoom(15);
+});
+</script>

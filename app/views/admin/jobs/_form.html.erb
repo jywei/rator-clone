@@ -1,0 +1,88 @@
+<% if @job.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@job.errors.count, "error") %> prohibited this job from being saved:</h2>
+
+  <ul>
+  <% @job.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<%end%>
+  <div class="form-group">
+    <%= j.label :name, "職缺名稱Name:"%>
+    <%= j.text_field :name, :class => "form-control", :required => true%>
+  </div>
+  <div class="form-group">
+  <%= j.label :job_category_id, "job類別:"%>
+  <%= j.collection_select :job_category_id, JobCategory.all, :id, :name, {}, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+  <%= j.label :job_tag_list, "標籤tags"%>
+  <%= j.text_field :job_tag_list, :class => "form-control", :id=>"job_tag_list"%>
+  </div>
+  <div class="form-group">
+    <%= j.label :content, "工作內容Content:"%>
+    <%= j.text_area :content, :class => "form-control", :rows=>"8", :required => true%>
+  </div>
+  <div class="form-group">
+    <%= j.label :skill, "條件要求Skill:"%>
+    <%= j.text_area :skill, :class => "form-control", :rows=>"8"%>
+  </div>
+  ===面議請留白，若為年薪，月薪請留白===
+  <div class="form-group">
+
+    <div class="col-md-6" style="padding-left:0px">
+    <%= j.label :year_salary_floor, "NT$最低薪資:"%>
+    <%= j.number_field :year_salary_floor, :class => "form-control"%>
+    </div>
+
+    <div class="col-md-6" style="padding-right:0px">
+    <%= j.label :year_salary_ceiling, "NT$最高薪資:(年薪)"%>
+    <%= j.number_field :year_salary_ceiling, :class => "form-control"%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-6" style="padding-left:0px">
+    <%= j.label :salary_floor, "NT$最低薪資:(月薪)"%>
+    <%= j.number_field :salary_floor, :class => "form-control"%>
+    </div>
+
+    <div class="col-md-6" style="padding-right:0px">
+    <%= j.label :salary_ceiling, "NT$最高薪資:(月薪)"%>
+    <%= j.number_field :salary_ceiling, :class => "form-control"%>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= j.label :intern do%>
+    <%= j.check_box :intern%>
+    <span>是否為實習職缺 (實習請打勾)</span>
+    <%end%>
+  </div>
+
+
+  <div class="form-group">
+    <%= j.label :status, "職缺狀態status"%>
+    <%= j.select :status, job_status_options , {}, :class => "form-control"  %>
+  </div>
+
+  <div class="form-group">
+    <%= j.label :published_on, "刊登時間Published_on:"%>
+    <%= j.date_select :published_on, :class => "datepicker", :required => true%>
+  </div>
+
+  <div class="form-group">
+  <%= j.submit "送出", :class => "btn btn-success"%>
+  </div>
+
+
+<script>
+  $("#job_tag_list").select2({
+    tags: <%=raw JobTag.all.map{|t| t.name}%>,
+    tokenSeparators: [',', ' ']
+  });
+</script>
+
+
