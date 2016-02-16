@@ -198,8 +198,6 @@ ActiveRecord::Schema.define(version: 20151231022054) do
     t.integer  "sequence",            limit: 4
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
-    t.string   "title",               limit: 255
-    t.string   "url",                 limit: 255
   end
 
   add_index "companies", ["area_id"], name: "index_companies_on_area_id", using: :btree
@@ -336,16 +334,6 @@ ActiveRecord::Schema.define(version: 20151231022054) do
 
   add_index "languages", ["user_id"], name: "index_languages_on_user_id", using: :btree
 
-  create_table "media", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.string   "url",        limit: 255
-    t.integer  "company_id", limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "media", ["company_id"], name: "index_media_on_company_id", using: :btree
-
   create_table "members", force: :cascade do |t|
     t.string   "name",               limit: 255
     t.string   "office",             limit: 255
@@ -359,16 +347,6 @@ ActiveRecord::Schema.define(version: 20151231022054) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
   end
-
-  create_table "news", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.string   "url",        limit: 255
-    t.integer  "company_id", limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "news", ["company_id"], name: "index_news_on_company_id", using: :btree
 
   create_table "skills", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -474,7 +452,5 @@ ActiveRecord::Schema.define(version: 20151231022054) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "media", "companies"
-  add_foreign_key "news", "companies"
   add_foreign_key "socials", "companies"
 end

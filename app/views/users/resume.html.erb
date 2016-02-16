@@ -40,6 +40,27 @@
     <hr>
 
     <div class="form-group">
+      <h5><%= t("collection") %></h5>
+      <%= u.nested_fields_for :collections do |c| %>
+      <div class="form-group">
+        網址
+        <%= c.url_field :url, :class => "form-control"%>
+        描述
+        <%= c.text_area :content, :class => "form-control"%>
+        <%= c.remove_nested_fields_link t("remove")%>
+        <p class="glyphicon glyphicon-exclamation-sign">作品集網址http://</p>
+      </div>
+        <% end %>
+       <%=u.add_nested_fields_link :collections, '新增作品網址', :class => "btn btn-danger btn-xs"%>
+        <p>
+          <i class="glyphicon glyphicon-exclamation-sign"></i>
+          您可以分享部落格、粉絲專頁、youtube頻道、github..讓徵才企業更加認識
+        </p>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
       <h5><%= u.label :summary, t("summary")%></h5>
       <%= u.text_area :summary, :class => "form-control", :rows=>"8"%>
       <p class="glyphicon glyphicon-exclamation-sign">請撰寫300字以內個人簡歷，讓徵才企業更加了解您。</p>
@@ -135,27 +156,6 @@
       </div>
         <% end %>
        <%=u.add_nested_fields_link :languages, "新增專業技能", :class => "btn btn-danger btn-xs"%>
-    </div>
-
-    <hr>
-
-    <div class="form-group">
-      <h5><%= t("collection") %></h5>
-      <%= u.nested_fields_for :collections do |c| %>
-      <div class="form-group">
-        網址
-        <%= c.url_field :url, :class => "form-control"%>
-        描述
-        <%= c.text_area :content, :class => "form-control"%>
-        <%= c.remove_nested_fields_link t("remove")%>
-        <p class="glyphicon glyphicon-exclamation-sign">作品集網址http://</p>
-      </div>
-        <% end %>
-       <%=u.add_nested_fields_link :collections, '新增作品網址', :class => "btn btn-danger btn-xs"%>
-        <p>
-          <i class="glyphicon glyphicon-exclamation-sign"></i>
-          您可以分享部落格、粉絲專頁、youtube頻道、github..讓徵才企業更加認識
-        </p>
     </div>
 
     <div class="form-group">

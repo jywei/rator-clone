@@ -72,11 +72,28 @@
             <%end%>
           <%end%>
 
+          <%= link_to follows_path, :class=>( (current_page?(follows_path))? "link_active" : "link") do%>
+            <span class="glyphicon glyphicon-inbox"></span>
+            <span>收藏</span>
+          <%end%>
 
+          <%= link_to resume_path, :class => ( (current_page?(resume_path))? "link_active" : "link" ) do%>
+            <span class="glyphicon glyphicon-file"></span>
+            <span>履歷表</span>
+          <%end%>
+
+          <%= link_to information_path, :class => ( (current_page?(information_path))? "link_active" : "link" ) do%>
+            <span class="glyphicon glyphicon-user"></span>
+            <span>基本資料</span>
+          <%end%>
+          <%= link_to destroy_user_session_path, :method => :delete, :class=>( (current_page?(destroy_user_session_path))? "link_active" : "link" ) do%>
+            <span class="glyphicon glyphicon-off"></span>
+            <span>登出</span>
+          <%end%>
+          <!--
           <%= link_to follows_path, :class=>( (current_page?(follows_path))? "link_active" : "link"), :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"收藏" do%>
             <span class="glyphicon glyphicon-inbox"></span>
           <%end%>
-
 
           <%= link_to resume_path, :class => ( (current_page?(resume_path))? "link_active" : "link" ), :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"履歷表" do%>
             <span class="glyphicon glyphicon-file"></span>
@@ -89,6 +106,7 @@
           <%= link_to destroy_user_session_path, :method => :delete, :class=>( (current_page?(destroy_user_session_path))? "link_active" : "link" ), :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"登出" do%>
             <span class="glyphicon glyphicon-off"></span>
           <%end%>
+          -->
       </div>
 
         <%else%>
