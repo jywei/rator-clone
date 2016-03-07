@@ -123,7 +123,7 @@
           <%#end%>
 
           <%=link_to  new_company_form_path, :class => "btn btn-default" do%>
-            發布職缺
+            刊登職缺
           <%end%>
 
           <%= link_to user_omniauth_authorize_path(:facebook), :class => "btn btn-default fb", :"data-toggle"=>"tooltip", :"data-placement"=>"bottom" , :title=>"使用Facebook登入可收藏您喜愛的文章或職缺 。Yourator絕不會主動在您的臉書上貼文，請安心使用Facebook登入。" do%>
@@ -145,16 +145,19 @@
 <footer class="footer-bg">
   <div class="container">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <div class="copy">
           <p>&copy Copyright 2015 Yourator. All Rights Reserved.</p>
          </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="footer-nav">
-          <%=link_to "yourator介紹", about_path, :class=>"btn btn-inverse btn-small"%>
-          <%=link_to "個資法宣告", privacy_path, :class=>"btn btn-inverse btn-small"%>
-          <%=link_to "張貼職缺", new_company_form_path, :class=>"btn btn-inverse btn-small"%>
+          <div class="social-icons icon-circle icon-rotate list-unstyled list-inline">
+            <a href="https://www.facebook.com/yourator.co/"><span class="fa fa-facebook"></span></a>
+            <%=link_to "Yourator介紹", about_path, :class=>"btn btn-inverse btn-small"%>
+            <%=link_to "個資法宣告", privacy_path, :class=>"btn btn-inverse btn-small"%>
+            <%=link_to "刊登職缺", new_company_form_path, :class=>"btn btn-inverse btn-small"%>
+          </div>
         </div>
         <div class="clearfix"></div>
       </div>
