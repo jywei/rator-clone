@@ -183,7 +183,6 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql2 (0.3.20)
     nested_form_fields (0.7)
       rails (>= 3.2.0)
     net-scp (1.2.1)
@@ -317,6 +316,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    sqlite3 (1.3.11)
     sshkit (1.7.1)
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
@@ -378,7 +378,6 @@ DEPENDENCIES
   kaminari
   letter_opener
   lightbox2-rails
-  mysql2 (= 0.3.20)
   nested_form_fields
   newrelic_rpm
   oj (~> 2.12.14)
@@ -399,10 +398,11 @@ DEPENDENCIES
   sinatra (>= 1.3.0)
   sitemap_generator
   spring
+  sqlite3
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   whenever
 
 BUNDLED WITH
-   1.10.6
+   1.12.5
